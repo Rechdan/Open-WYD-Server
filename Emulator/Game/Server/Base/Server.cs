@@ -18,9 +18,16 @@ namespace Emulator {
 			Log.Information ( $"Servidor {this.Name} iniciado!" );
 		}
 
-		public void AddChannel ( Channel c, Action<Channel> a ) {
+		public Server AddChannel ( Channel c, Action<Channel> a ) {
 			this.Channels.Add ( c );
 			a?.Invoke ( c );
+			return this;
+		}
+
+		// Task
+		public void OnTask ( ) {
+			// Varre os canais
+			this.Channels.ForEach ( c => c.OnTask ( ) );
 		}
 	}
 }

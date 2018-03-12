@@ -17,6 +17,8 @@ namespace Emulator {
 
 		public ClientStatus Status { get; private set; }
 
+		public DateTime ConnectionTime { get; private set; }
+
 		// Construtor
 		public Client ( Server Server, Channel Channel, Socket s ) {
 			this.Server = Server;
@@ -26,6 +28,8 @@ namespace Emulator {
 			this.Active = true;
 
 			this.Status = ClientStatus.Connection;
+
+			this.ConnectionTime = Config.Time;
 
 			Log.Conn ( this, true );
 
@@ -93,6 +97,18 @@ namespace Emulator {
 				this.Socket = null;
 
 				this.Channel.Clients.Remove ( this );
+			}
+		}
+
+		// Task
+		public void OnTask ( ) {
+			// Valida conexão
+			if ( this.Status == ClientStatus.Connection ) {
+				// Se já passou 3 segundos, corta conexão
+				if ( ( Config.Time - this.ConnectionTime ).TotalSeconds >= 3d ) {
+					this.Close ( );
+					return;
+				}
 			}
 		}
 	}

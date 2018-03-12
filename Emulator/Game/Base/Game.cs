@@ -18,9 +18,10 @@ namespace Emulator {
 			Log.Information ( "Game iniciado!" );
 		}
 
-		public void AddServer ( Server s, Action<Server> a ) {
+		public Game AddServer ( Server s, Action<Server> a ) {
 			this.Servers.Add ( s );
 			a?.Invoke ( s );
+			return this;
 		}
 
 		public void Run ( ) {
@@ -39,7 +40,8 @@ namespace Emulator {
 		private async Task Controller ( ) {
 			while ( this.Active ) {
 				try {
-
+					// Varre os servidores
+					this.Servers.ForEach ( s => s.OnTask ( ) );
 				} catch ( Exception ex ) {
 					Log.Error ( ex );
 				} finally {

@@ -60,5 +60,12 @@ namespace Emulator {
 				this.BeginAccept ( );
 			}
 		}
+
+		// Task
+		public void OnTask ( ) {
+			// Varre os clientes
+			// .ToList serve para se algum cliente for removido não dar erro no .ForEach
+			this.Clients.ToList().ForEach ( c => c.OnTask ( ) );
+		}
 	}
 }

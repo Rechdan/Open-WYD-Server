@@ -15,9 +15,16 @@ namespace Emulator {
 		public static void Initialize ( ) {
 			Game = new Game ( );
 
-			Game.AddServer ( new Server ( "Destiny" ), server => {
-				server.AddChannel ( new Channel ( server, "192.168.50.100" ), channel => { } );
-			} );
+			Game
+				.AddServer ( new Server ( "First" ), server => {
+					server
+						.AddChannel ( new Channel ( server, "192.168.50.100" ), null );
+				} )
+				.AddServer ( new Server ( "Second" ), server => {
+					server
+						.AddChannel ( new Channel ( server, "127.0.0.1" ), null )
+						.AddChannel ( new Channel ( server, "127.0.0.2" ), null );
+				} );
 
 			Game.Run ( );
 		}
