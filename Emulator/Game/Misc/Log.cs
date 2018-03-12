@@ -26,6 +26,6 @@ namespace Emulator {
 
 		public static void Conn ( Client c, bool i ) => Write ( $"Cliente {c.Socket.RemoteEndPoint} se {( i ? "" : "des" )}conectou", ConsoleColor.Yellow );
 
-		public static void Rcv ( Client c, SHeader h ) => Write ( $"RCV > P: 0x{h.packetID.ToString ( "X" ).PadLeft ( 4, '0' )} | S: {h.size.ToString ( ).PadLeft ( 4, '0' )} | CID: {h.clientID.ToString ( ).PadLeft ( 4, '0' )}", ConsoleColor.Magenta );
+		public static void Rcv ( Client c, SHeader h ) => Write ( $"RCV > P: 0x{h.PacketID.ToString ( "X" ).PadLeft ( 4, '0' )} | S: {h.Size.ToString ( ).PadLeft ( 4, '0' )} | CID: {h.ClientID.ToString ( ).PadLeft ( 4, '0' )}", ConsoleColor.Magenta );
 	}
 }

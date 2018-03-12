@@ -51,18 +51,18 @@
     <Compile Include="Game\Server\Channel\Base\Channel.cs" />
     <Compile Include="Game\Server\Channel\Client\Base\Client.cs" />
     <Compile Include="Game\Server\Channel\Client\Base\ClientStatus.cs" />
+    <Compile Include="Game\Server\Packet\Base\Functions.cs" />
     <Compile Include="Game\Server\Packet\Base\PControl.cs" />
     <Compile Include="Game\Server\Packet\Base\PConvert.cs" />
     <Compile Include="Game\Server\Packet\Base\PSecurity.cs" />
-    <Compile Include="Game\Server\Packet\Packets\SHeader.cs" />
+    <Compile Include="Game\Server\Packet\Packets\P020D.cs" />
+    <Compile Include="Game\Server\Packet\Structs\SHeader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Game\Misc\app.manifest" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Game\Server\Packet\Structs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

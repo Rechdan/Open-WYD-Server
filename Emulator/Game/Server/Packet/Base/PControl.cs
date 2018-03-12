@@ -18,8 +18,8 @@ namespace Emulator {
 
 				switch ( client.Status ) {
 					case ClientStatus.Login: {
-						switch ( header.packetID ) {
-							case 0x20D: break;  // Login
+						switch ( header.PacketID ) {
+							case 0x20D: P_20D.Controller ( client, PConvert.ToStruct<P_20D> ( data ) ); break;  // Login
 
 							default: client.Close ( ); break;
 						}
@@ -28,7 +28,7 @@ namespace Emulator {
 					}
 
 					case ClientStatus.Numeric: {
-						switch ( header.packetID ) {
+						switch ( header.PacketID ) {
 							case 0xFDE: break;  // Senha numérica
 
 							default: client.Close ( ); break;
