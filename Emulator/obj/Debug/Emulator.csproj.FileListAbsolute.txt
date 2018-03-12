@@ -1,0 +1,7 @@
+D:\DOD\Open WYD Server\Emulator\Build\Emulator.exe.config
+D:\DOD\Open WYD Server\Emulator\Build\Emulator.exe
+D:\DOD\Open WYD Server\Emulator\Build\Emulator.pdb
+D:\DOD\Open WYD Server\Emulator\obj\Debug\Emulator.csproj.CoreCompileInputs.cache
+D:\DOD\Open WYD Server\Emulator\obj\Debug\Emulator.exe
+D:\DOD\Open WYD Server\Emulator\obj\Debug\Emulator.pdb
+D:\DOD\Open WYD Server\Emulator\obj\Debug\Emulator.csprojResolveAssemblyReference.cache
