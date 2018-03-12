@@ -27,6 +27,8 @@ namespace Emulator {
 
 			this.Status = ClientStatus.Connection;
 
+			Log.Conn ( this, true );
+
 			this.BeginReceive ( );
 		}
 
@@ -57,14 +59,21 @@ namespace Emulator {
 							return;
 						} else if ( size == 120 ) {
 							tmp = tmp.Skip ( 4 ).ToArray ( );
-						} else {
-							this.Status = ClientStatus.Login;
 						}
+
+						this.Status = ClientStatus.Login;
+					}
+
+					if ( size < 12 ) {
+						this.Close ( );
+						return;
 					}
 
 					PSecurity.Decrypt ( tmp );
 
-					Log.Normal ( $"Size: {tmp.Length:N0}{Environment.NewLine}{string.Join ( ", ", tmp.Select ( a => $"0x{$"{a:X}".PadLeft ( 2, '0' )}" ) )}" );
+					//Log.Normal ( $"Size: {tmp.Length:N0}{Environment.NewLine}{string.Join ( ", ", tmp.Select ( a => $"0x{$"{a:X}".PadLeft ( 2, '0' )}" ) )}" );
+
+					PControl.Controller ( this, tmp );
 				}
 			} catch ( Exception ex ) {
 				Log.Error ( ex );
@@ -77,6 +86,8 @@ namespace Emulator {
 		public void Close ( ) {
 			if ( this.Active ) {
 				this.Active = false;
+
+				Log.Conn ( this, false );
 
 				this.Socket.Close ( );
 				this.Socket = null;
