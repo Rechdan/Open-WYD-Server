@@ -6,7 +6,7 @@ namespace Emulator {
 	/// Tela de seleção de personagens - size 1928
 	/// </summary>
 	[StructLayout ( LayoutKind.Sequential , CharSet = CharSet.Ansi , Pack = 1 )]
-	public struct P010A {
+	public struct P_10A {
 		// Atributos
 		public SHeader Header;          // 0 a 11				= 12
 
@@ -39,9 +39,9 @@ namespace Emulator {
 		}
 
 		// Construtores
-		public static P010A New ( Client client ) {
-			P010A tmp = new P010A {
-				Header = SHeader.New ( 0x010A , Marshal.SizeOf<P010A> ( ) , 30002 ) ,
+		public static P_10A New ( Client client ) {
+			P_10A tmp = new P_10A {
+				Header = SHeader.New ( 0x010A , Marshal.SizeOf<P_10A> ( ) , 30002 ) ,
 
 				Unk1 = new byte [ 16 ] ,
 

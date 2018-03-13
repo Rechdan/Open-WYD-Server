@@ -6,7 +6,7 @@ namespace Emulator {
 	/// Alerta - size 108
 	/// </summary>
 	[StructLayout ( LayoutKind.Sequential , CharSet = CharSet.Ansi , Pack = 1 )]
-	public struct P0101 {
+	public struct P_101 {
 		// Atributos
 		public SHeader Header;        // 0 a 11		= 12
 
@@ -26,9 +26,9 @@ namespace Emulator {
 		}
 
 		// Construtores
-		public static P0101 New ( string Message ) {
-			P0101 tmp = new P0101 {
-				Header = SHeader.New ( 0x0101 , Marshal.SizeOf<P0101> ( ) , 0 ) ,
+		public static P_101 New ( string Message ) {
+			P_101 tmp = new P_101 {
+				Header = SHeader.New ( 0x0101 , Marshal.SizeOf<P_101> ( ) , 0 ) ,
 				Message = Message ,
 				Unk1 = new byte [ 16 ]
 			};

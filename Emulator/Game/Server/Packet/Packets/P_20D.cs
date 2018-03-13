@@ -6,7 +6,7 @@ namespace Emulator {
 	/// Login - size 116
 	/// </summary>
 	[StructLayout ( LayoutKind.Sequential , CharSet = CharSet.Ansi , Pack = 1 )]
-	public struct P020D {
+	public struct P_20D {
 		// Atributos
 		public SHeader Header;          // 0 a 11		= 12
 
@@ -32,7 +32,7 @@ namespace Emulator {
 		public string Password => Functions.GetString ( this.PasswordBytes );
 
 		// Controlador
-		public static void Controller ( Client client , P020D rcv ) {
+		public static void Controller ( Client client , P_20D rcv ) {
 			if ( !Regex.IsMatch ( rcv.UserName , @"^[A-Za-z0-9]{4,12}$" ) ) {
 				client.Close ( "Somente letras e números no login. 4 a 12 caracteres." );
 			} else if ( !Regex.IsMatch ( rcv.Password , @"^[A-Za-z0-9]{4,10}$" ) ) {
@@ -41,12 +41,12 @@ namespace Emulator {
 				Log.Information ( $"UserName: {rcv.UserName}, {rcv.UserName.Length}" );
 				Log.Information ( $"Password: {rcv.Password}, {rcv.Password.Length}" );
 
-				P010A p010A = P010A.New ( client );
+				P_10A p010A = P_10A.New ( client );
 
 				p010A.UserName = rcv.UserName;
 
 				client.Send ( p010A );
-				client.Send ( P0101.New ( "Seja bem-vindo ao Open WYD Server!" ) );
+				client.Send ( P_101.New ( "Entre com sua senha numérica!" ) );
 
 				client.Status = ClientStatus.Numeric;
 			}

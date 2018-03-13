@@ -119,7 +119,7 @@ namespace Emulator {
 				throw new Exception ( "Reason == null" );
 			}
 
-			this.Send ( P0101.New ( Reason ) );
+			this.Send ( P_101.New ( Reason ) );
 		}
 
 		// Task

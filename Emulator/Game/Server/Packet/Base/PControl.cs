@@ -27,7 +27,7 @@ namespace Emulator {
 				switch ( client.Status ) {
 					case ClientStatus.Login: {
 						switch ( header.PacketID ) {
-							case 0x20D: P020D.Controller ( client , PConvert.ToStruct<P020D> ( data ) ); break;  // Login
+							case 0x20D: P_20D.Controller ( client , PConvert.ToStruct<P_20D> ( data ) ); break;  // Login
 
 							default: client.Close ( ); break;
 						}
@@ -37,7 +37,7 @@ namespace Emulator {
 
 					case ClientStatus.Numeric: {
 						switch ( header.PacketID ) {
-							case 0xFDE: P0FDE.Controller ( client , PConvert.ToStruct<P0FDE> ( data ) ); break;  // Senha numérica
+							case 0xFDE: P_FDE.Controller ( client , PConvert.ToStruct<P_FDE> ( data ) ); break;  // Senha numérica
 
 							default: client.Close ( ); break;
 						}
@@ -47,11 +47,11 @@ namespace Emulator {
 
 					case ClientStatus.Characters: {
 						switch ( header.PacketID ) {
-							case 0x020F: break; // Criar personagem
+							case 0x020F: P_20F.Controller ( client , PConvert.ToStruct<P_20F> ( data ) ); break; // Criar personagem
 							case 0x0211: break; // Apagar personagem
 							case 0x0213: break; // Entrar no mundo
 
-							case 0xFDE: P0FDE.Controller ( client , PConvert.ToStruct<P0FDE> ( data ) ); break;  // Alterar senha numérica
+							case 0xFDE: P_FDE.Controller ( client , PConvert.ToStruct<P_FDE> ( data ) ); break;  // Alterar senha numérica
 
 							default: client.Close ( ); break;
 						}
