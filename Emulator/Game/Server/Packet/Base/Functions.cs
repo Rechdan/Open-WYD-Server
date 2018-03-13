@@ -12,7 +12,7 @@ namespace Emulator {
 				throw new Exception ( "data == null" );
 			}
 
-			return Encoding.UTF8.GetString ( data ).TrimEnd ( '\0' );
+			return Config.Encoding.GetString ( data ).TrimEnd ( '\0' );
 		}
 	}
 }

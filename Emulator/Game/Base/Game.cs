@@ -18,7 +18,7 @@ namespace Emulator {
 			Log.Information ( "Game iniciado!" );
 		}
 
-		public Game AddServer ( Server s, Action<Server> a ) {
+		public Game AddServer ( Server s , Action<Server> a ) {
 			this.Servers.Add ( s );
 			a?.Invoke ( s );
 			return this;

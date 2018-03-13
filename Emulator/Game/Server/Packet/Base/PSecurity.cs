@@ -47,7 +47,7 @@ namespace Emulator {
 			byte hashKey = pBuffer [ 2 ];
 			uint keyIncrement = ( uint ) ( keyTable [ hashKey * 2 ] & 0xFF );
 
-			for ( uint i = 4, loopIterator = 0 ; i < BitConverter.ToInt16 ( pBuffer, 0 ) ; i++, keyIncrement++ ) {
+			for ( uint i = 4, loopIterator = 0 ; i < BitConverter.ToInt16 ( pBuffer , 0 ) ; i++, keyIncrement++ ) {
 				checksumDec += pBuffer [ i ];
 				keyResult = keyTable [ ( ( keyIncrement & 0x800000FF ) * 2 ) + 1 ];
 				loopIterator = i & 3;
@@ -81,7 +81,7 @@ namespace Emulator {
 				uint keyIncrement = keyTable [ ( pBuffer [ 2 + offset ] * 2 ) ], keyResult = 0;
 				byte checksumEnc = 0, checksumDec = 0;
 
-				for ( int i = 4, thisIterator = 0 ; i < BitConverter.ToInt16 ( pBuffer, offset ) ; i++, keyIncrement++ ) {
+				for ( int i = 4, thisIterator = 0 ; i < BitConverter.ToInt16 ( pBuffer , offset ) ; i++, keyIncrement++ ) {
 					checksumEnc += pBuffer [ i + offset ];
 					keyResult = keyTable [ ( ( keyIncrement & 0x800000FF ) * 2 ) + 1 ];
 					thisIterator = i & 3;

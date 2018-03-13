@@ -1,37 +1,55 @@
 ﻿using System.Runtime.InteropServices;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Emulator {
 	/// <summary>
-	/// Login
+	/// Login - size 116
 	/// </summary>
-	[StructLayout ( LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1 )]
-	public struct P_20D {
+	[StructLayout ( LayoutKind.Sequential , CharSet = CharSet.Ansi , Pack = 1 )]
+	public struct P020D {
 		// Atributos
 		public SHeader Header;          // 0 a 11		= 12
 
-		[MarshalAs ( UnmanagedType.ByValArray, SizeConst = 12 )]
-		public byte [ ] PasswordBytes;  // 12 a 23	= 12
+		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 10 )]
+		public byte [ ] PasswordBytes;  // 12 a 21	= 10
 
-		[MarshalAs ( UnmanagedType.ByValArray, SizeConst = 16 )]
-		public byte [ ] UsernameBytes;  // 24 a 39	= 16
+		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 2 )]
+		public byte [ ] Unk1;           // 22 a 23	= 2
 
-		[MarshalAs ( UnmanagedType.ByValArray, SizeConst = 52 )]
-		public byte [ ] Unk1;           // 40 a 91	= 52
+		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 12 )]
+		public byte [ ] UserNameBytes;  // 24 a 35	= 12
+
+		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 56 )]
+		public byte [ ] Unk2;           // 36 a 91	= 56
 
 		public int Version;             // 92 a 95	= 4
 
-		[MarshalAs ( UnmanagedType.ByValArray, SizeConst = 20 )]
-		public byte [ ] Unk2;           // 96 a 115	= 20
+		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 20 )]
+		public byte [ ] Unk3;           // 96 a 115	= 20
 
 		// Ajudantes
-		public string UserName => Functions.GetString ( this.UsernameBytes );
+		public string UserName => Functions.GetString ( this.UserNameBytes );
 		public string Password => Functions.GetString ( this.PasswordBytes );
 
 		// Controlador
-		public static void Controller ( Client client, P_20D rcv ) {
-			Log.Information ( $"UserName: {rcv.UserName}, {rcv.UserName.Length}" );
-			Log.Information ( $"Password: {rcv.Password}, {rcv.Password.Length}" );
+		public static void Controller ( Client client , P020D rcv ) {
+			if ( !Regex.IsMatch ( rcv.UserName , @"^[A-Za-z0-9]{4,12}$" ) ) {
+				client.Close ( "Somente letras e números no login. 4 a 12 caracteres." );
+			} else if ( !Regex.IsMatch ( rcv.Password , @"^[A-Za-z0-9]{4,10}$" ) ) {
+				client.Close ( "Somente letras e números na senha. 4 a 10 caracteres." );
+			} else {
+				Log.Information ( $"UserName: {rcv.UserName}, {rcv.UserName.Length}" );
+				Log.Information ( $"Password: {rcv.Password}, {rcv.Password.Length}" );
+
+				P010A p010A = P010A.New ( client );
+
+				p010A.UserName = rcv.UserName;
+
+				client.Send ( p010A );
+				client.Send ( P0101.New ( "Seja bem-vindo ao Open WYD Server!" ) );
+
+				client.Status = ClientStatus.Numeric;
+			}
 		}
 	}
 }

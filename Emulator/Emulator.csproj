@@ -55,8 +55,17 @@
     <Compile Include="Game\Server\Packet\Base\PControl.cs" />
     <Compile Include="Game\Server\Packet\Base\PConvert.cs" />
     <Compile Include="Game\Server\Packet\Base\PSecurity.cs" />
+    <Compile Include="Game\Server\Packet\Packets\P0101.cs" />
+    <Compile Include="Game\Server\Packet\Packets\P010A.cs" />
     <Compile Include="Game\Server\Packet\Packets\P020D.cs" />
+    <Compile Include="Game\Server\Packet\Packets\P0FDE.cs" />
+    <Compile Include="Game\Server\Packet\Structs\SCharList.cs" />
+    <Compile Include="Game\Server\Packet\Structs\SCharListEquip.cs" />
+    <Compile Include="Game\Server\Packet\Structs\SCharListName.cs" />
     <Compile Include="Game\Server\Packet\Structs\SHeader.cs" />
+    <Compile Include="Game\Server\Packet\Structs\SItem.cs" />
+    <Compile Include="Game\Server\Packet\Structs\SItemEF.cs" />
+    <Compile Include="Game\Server\Packet\Structs\SStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

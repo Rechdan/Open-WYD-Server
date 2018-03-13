@@ -17,13 +17,13 @@ namespace Emulator {
 		public List<Client> Clients { get; private set; }
 
 		// Construtor
-		public Channel ( Server Server, string ip ) {
+		public Channel ( Server Server , string ip ) {
 			this.Server = Server;
 
-			if ( IPAddress.TryParse ( ip, out IPAddress ipad ) ) {
-				IPEndPoint ipep = new IPEndPoint ( ipad, 8281 );
+			if ( IPAddress.TryParse ( ip , out IPAddress ipad ) ) {
+				IPEndPoint ipep = new IPEndPoint ( ipad , 8281 );
 
-				this.Socket = new Socket ( AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp );
+				this.Socket = new Socket ( AddressFamily.InterNetwork , SocketType.Stream , ProtocolType.Tcp );
 				this.Socket.Bind ( ipep );
 				this.Socket.Listen ( 0 );
 
@@ -40,7 +40,7 @@ namespace Emulator {
 		// Aceita conexões
 		private void BeginAccept ( ) {
 			try {
-				this.Socket.BeginAccept ( new AsyncCallback ( this.OnAccept ), null );
+				this.Socket.BeginAccept ( new AsyncCallback ( this.OnAccept ) , null );
 			} catch ( Exception ex ) {
 				Log.Error ( ex );
 			}
@@ -52,7 +52,7 @@ namespace Emulator {
 				try { s = this.Socket.EndAccept ( ar ); } catch { s = null; }
 
 				if ( s != null ) {
-					this.Clients.Add ( new Client ( this.Server, this, s ) );
+					this.Clients.Add ( new Client ( this.Server , this , s ) );
 				}
 			} catch ( Exception ex ) {
 				Log.Error ( ex );
@@ -65,7 +65,7 @@ namespace Emulator {
 		public void OnTask ( ) {
 			// Varre os clientes
 			// .ToList serve para se algum cliente for removido não dar erro no .ForEach
-			this.Clients.ToList().ForEach ( c => c.OnTask ( ) );
+			this.Clients.ToList ( ).ForEach ( c => c.OnTask ( ) );
 		}
 	}
 }

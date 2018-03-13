@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 namespace Emulator {
-	[StructLayout ( LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1 )]
+	[StructLayout ( LayoutKind.Sequential , CharSet = CharSet.Ansi , Pack = 1 )]
 	public struct SHeader // 12
 	{
 		public short Size;      // 0 a 1	= 2
@@ -12,13 +12,13 @@ namespace Emulator {
 		public short ClientID;  // 6 a 7	= 2
 		public int TimeStamp;   // 8 a 11	= 4
 
-		public static SHeader New ( short PacketID, int Size, int ClientID ) {
+		public static SHeader New ( short PacketID , int Size , int ClientID ) {
 			SHeader tmp = new SHeader {
-				Size = ( short ) ( Size ),
-				Key = 0,
-				CheckSum = 0,
-				PacketID = PacketID,
-				ClientID = ( short ) ( ClientID ),
+				Size = ( short ) ( Size ) ,
+				Key = 0 ,
+				CheckSum = 0 ,
+				PacketID = PacketID ,
+				ClientID = ( short ) ( ClientID ) ,
 				TimeStamp = Environment.TickCount
 			};
 

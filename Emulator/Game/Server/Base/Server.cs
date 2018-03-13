@@ -18,7 +18,7 @@ namespace Emulator {
 			Log.Information ( $"Servidor {this.Name} iniciado!" );
 		}
 
-		public Server AddChannel ( Channel c, Action<Channel> a ) {
+		public Server AddChannel ( Channel c , Action<Channel> a ) {
 			this.Channels.Add ( c );
 			a?.Invoke ( c );
 			return this;

@@ -15,23 +15,23 @@ namespace Emulator {
 		public byte [ ] Buffer { get; private set; }
 		public bool Active { get; private set; }
 
-		public ClientStatus Status { get; private set; }
+		public ClientStatus Status { get; set; }
 
 		public DateTime ConnectionTime { get; private set; }
 
 		// Construtor
-		public Client ( Server Server, Channel Channel, Socket s ) {
+		public Client ( Server Server , Channel Channel , Socket Socket ) {
 			this.Server = Server;
 			this.Channel = Channel;
 
-			this.Socket = s;
+			this.Socket = Socket;
 			this.Active = true;
 
 			this.Status = ClientStatus.Connection;
 
 			this.ConnectionTime = Config.Time;
 
-			Log.Conn ( this, true );
+			Log.Conn ( this , true );
 
 			this.BeginReceive ( );
 		}
@@ -41,7 +41,7 @@ namespace Emulator {
 			try {
 				if ( this.Active ) {
 					this.Buffer = new byte [ 1024 ];
-					this.Socket.BeginReceive ( this.Buffer, 0, this.Buffer.Length, SocketFlags.None, new AsyncCallback ( this.OnReceive ), null );
+					this.Socket.BeginReceive ( this.Buffer , 0 , this.Buffer.Length , SocketFlags.None , new AsyncCallback ( this.OnReceive ) , null );
 				}
 			} catch ( Exception ex ) {
 				Log.Error ( ex );
@@ -77,7 +77,7 @@ namespace Emulator {
 
 					//Log.Normal ( $"Size: {tmp.Length:N0}{Environment.NewLine}{string.Join ( ", ", tmp.Select ( a => $"0x{$"{a:X}".PadLeft ( 2, '0' )}" ) )}" );
 
-					PControl.Controller ( this, tmp );
+					PControl.Controller ( this , tmp );
 				}
 			} catch ( Exception ex ) {
 				Log.Error ( ex );
@@ -86,18 +86,40 @@ namespace Emulator {
 			}
 		}
 
+		// Envia pacote
+		public void Send<T> ( T o ) {
+			if ( o == null ) {
+				throw new Exception ( "" );
+			} else {
+				byte [ ] send = PConvert.ToByteArray ( o );
+
+				Log.Snd ( this , PConvert.ToStruct<SHeader> ( send ) );
+
+				PSecurity.Encrypt ( send );
+
+				this.Socket.BeginSend ( send , 0 , send.Length , SocketFlags.None , null , null );
+			}
+		}
+
 		// Desconecta o cliente
 		public void Close ( ) {
 			if ( this.Active ) {
 				this.Active = false;
 
-				Log.Conn ( this, false );
+				Log.Conn ( this , false );
 
-				this.Socket.Close ( );
+				this.Socket.Close ( 2000 );
 				this.Socket = null;
 
 				this.Channel.Clients.Remove ( this );
 			}
+		}
+		public void Close ( string Reason ) {
+			if ( Reason == null ) {
+				throw new Exception ( "Reason == null" );
+			}
+
+			this.Send ( P0101.New ( Reason ) );
 		}
 
 		// Task
