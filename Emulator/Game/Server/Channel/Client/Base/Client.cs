@@ -19,6 +19,9 @@ namespace Emulator {
 
 		public DateTime ConnectionTime { get; private set; }
 
+		// Conta
+		public Account Account { get; private set; }
+
 		// Construtor
 		public Client ( Server Server , Channel Channel , Socket Socket ) {
 			this.Server = Server;
@@ -30,6 +33,8 @@ namespace Emulator {
 			this.Status = ClientStatus.Connection;
 
 			this.ConnectionTime = Config.Time;
+
+			this.Account = new Account ( );
 
 			Log.Conn ( this , true );
 

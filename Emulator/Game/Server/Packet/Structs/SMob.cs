@@ -69,10 +69,14 @@ namespace Emulator {
 		public byte ResistHoly;         // 806					= 1
 		public byte ResistThunder;      // 807					= 1
 
-		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 216 )]
-		public byte [ ] Unk5;           // 808 a 1023		= 216
+		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 210 )]
+		public byte [ ] Unk5;           // 808 a 1017		= 210
 
-		public short Slot;              // 1024 a 1025	= 2
+		public short MagicIncrement;    // 1018 a 1019	= 2
+
+		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 6 )]
+		public byte [ ] Unk6;           // 1020 a 1025	= 6
+
 		public short ClientId;          // 1026 a 1027	= 2
 		public short CityId;            // 1028 a 1029	= 2
 
@@ -80,7 +84,7 @@ namespace Emulator {
 		public byte [ ] SkillBar2;      // 1030 a 1045	= 16
 
 		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 2 )]
-		public byte [ ] Unk6;           // 1046 a 1047	= 2
+		public byte [ ] Unk7;           // 1046 a 1047	= 2
 
 		public uint Hold;               // 1048 a 1051	= 4
 
@@ -88,7 +92,7 @@ namespace Emulator {
 		public byte [ ] TabBytes;       // 1052 a 1077	= 26
 
 		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 2 )]
-		public byte [ ] Unk7;           // 1078 a 1079	= 2
+		public byte [ ] Unk8;           // 1078 a 1079	= 2
 
 		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 32 )]
 		public SAffect [ ] Affects;     // 1080 a 1335	= 256
@@ -164,21 +168,24 @@ namespace Emulator {
 				ResistFire = 0 ,
 				ResistIce = 0 ,
 
-				Unk5 = new byte [ 216 ] ,
+				Unk5 = new byte [ 210 ] ,
 
-				Slot = 0 ,
+				MagicIncrement = 0 ,
+
+				Unk6 = new byte [ 6 ] ,
+
 				ClientId = 0 ,
 				CityId = 0 ,
 
 				SkillBar2 = new byte [ 16 ] ,
 
-				Unk6 = new byte [ 2 ] ,
+				Unk7 = new byte [ 2 ] { 204 , 204 } ,
 
 				Hold = 0 ,
 
 				Tab = "" ,
 
-				Unk7 = new byte [ 2 ] ,
+				Unk8 = new byte [ 2 ] ,
 
 				Affects = new SAffect [ 32 ]
 			};

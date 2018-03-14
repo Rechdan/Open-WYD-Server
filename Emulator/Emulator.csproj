@@ -49,14 +49,17 @@
     <Compile Include="Game\Misc\Program.cs" />
     <Compile Include="Game\Server\Base\Server.cs" />
     <Compile Include="Game\Server\Channel\Base\Channel.cs" />
+    <Compile Include="Game\Server\Channel\Client\Account\Account.cs" />
     <Compile Include="Game\Server\Channel\Client\Base\Client.cs" />
     <Compile Include="Game\Server\Channel\Client\Base\ClientStatus.cs" />
+    <Compile Include="Game\Server\Channel\Client\Character\Base\Character.cs" />
     <Compile Include="Game\Server\Packet\Base\Functions.cs" />
     <Compile Include="Game\Server\Packet\Base\PControl.cs" />
     <Compile Include="Game\Server\Packet\Base\PConvert.cs" />
     <Compile Include="Game\Server\Packet\Base\PSecurity.cs" />
     <Compile Include="Game\Server\Packet\Packets\P_101.cs" />
     <Compile Include="Game\Server\Packet\Packets\P_10A.cs" />
+    <Compile Include="Game\Server\Packet\Packets\P_110.cs" />
     <Compile Include="Game\Server\Packet\Packets\P_20D.cs" />
     <Compile Include="Game\Server\Packet\Packets\P_20F.cs" />
     <Compile Include="Game\Server\Packet\Packets\P_FDE.cs" />

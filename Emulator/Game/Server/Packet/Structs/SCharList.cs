@@ -53,15 +53,29 @@ namespace Emulator {
 			};
 
 			for ( int i = 0 ; i < 4 ; i++ ) {
-				tmp.PosX [ i ] = 0;
-				tmp.PosY [ i ] = 0;
+				if ( client.Account.Characters [ i ] == null ) {
+					tmp.PosX [ i ] = 0;
+					tmp.PosY [ i ] = 0;
 
-				tmp.Name [ i ] = SCharListName.New ( "" );
-				tmp.Status [ i ] = SStatus.New ( );
-				tmp.Equips [ i ] = SCharListEquip.New ( );
+					tmp.Name [ i ] = SCharListName.New ( "" );
+					tmp.Status [ i ] = SStatus.New ( );
+					tmp.Equips [ i ] = SCharListEquip.New ( );
 
-				tmp.Gold [ i ] = 0;
-				tmp.Exp [ i ] = 0;
+					tmp.Gold [ i ] = 0;
+					tmp.Exp [ i ] = 0;
+				} else {
+					SMob mob = client.Account.Characters [ i ].Mob;
+
+					tmp.PosX [ i ] = mob.LastPosition.X;
+					tmp.PosY [ i ] = mob.LastPosition.Y;
+
+					tmp.Name [ i ] = SCharListName.New ( mob.Name );
+					tmp.Status [ i ] = mob.GameStatus;
+					tmp.Equips [ i ] = SCharListEquip.New ( mob.Equip );
+
+					tmp.Gold [ i ] = mob.Gold;
+					tmp.Exp [ i ] = mob.Exp;
+				}
 			}
 
 			return tmp;

@@ -41,14 +41,18 @@ namespace Emulator {
 				Log.Information ( $"UserName: {rcv.UserName}, {rcv.UserName.Length}" );
 				Log.Information ( $"Password: {rcv.Password}, {rcv.Password.Length}" );
 
-				P_10A p010A = P_10A.New ( client );
+				if ( !client.Account.Login ( rcv.UserName , rcv.Password ) ) {
+					client.Close ( "Login ou senha inválido!" );
+				} else {
+					P_10A p010A = P_10A.New ( client );
 
-				p010A.UserName = rcv.UserName;
+					p010A.UserName = rcv.UserName;
 
-				client.Send ( p010A );
-				client.Send ( P_101.New ( "Entre com sua senha numérica!" ) );
+					client.Send ( p010A );
+					client.Send ( P_101.New ( $"Entre com sua senha numérica! [{client.Account.Numeric}]" ) );
 
-				client.Status = ClientStatus.Numeric;
+					client.Status = ClientStatus.Numeric;
+				}
 			}
 		}
 	}

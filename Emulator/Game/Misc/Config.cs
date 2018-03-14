@@ -13,6 +13,8 @@ namespace Emulator {
 		public static readonly CultureInfo Culture = new CultureInfo ( "pt-BR" );
 		public static readonly Encoding Encoding = Encoding.GetEncoding ( "Windows-1252" );
 
+		public static readonly Random Random = new Random ( ( int ) ( Time.Ticks ) );
+
 		public static Game Game { get; private set; }
 
 		// Inicializador

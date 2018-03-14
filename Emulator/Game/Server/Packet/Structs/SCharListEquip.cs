@@ -22,5 +22,12 @@ namespace Emulator {
 
 			return tmp;
 		}
+		public static SCharListEquip New ( SItem [ ] Item ) {
+			SCharListEquip tmp = new SCharListEquip ( ) {
+				Slot = Item
+			};
+
+			return tmp;
+		}
 	}
 }

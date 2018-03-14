@@ -29,7 +29,7 @@ namespace Emulator {
 				Log.Information ( $"Numeric: {rcv.Numeric}, {rcv.Numeric.Length}" );
 
 				if ( client.Status == ClientStatus.Numeric ) {
-					if ( rcv.Numeric != "25261" ) {
+					if ( rcv.Numeric != client.Account.Numeric ) {
 						client.Send ( SHeader.New ( 0x0FDF , Marshal.SizeOf<SHeader> ( ) , 0 ) );
 						client.Send ( P_101.New ( "Senha numérica inválida! [25261]" ) );
 					} else {
@@ -42,7 +42,7 @@ namespace Emulator {
 					if ( rcv.Change != 1 ) {
 						client.Close ( );
 					} else {
-						// Alterar a senha numérica
+						client.Send ( P_101.New ( "Alterar senha numérica em desenvolvimento!" ) );
 					}
 				} else {
 					client.Close ( );

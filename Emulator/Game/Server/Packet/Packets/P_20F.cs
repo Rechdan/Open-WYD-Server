@@ -35,7 +35,12 @@ namespace Emulator {
 			if ( !Regex.IsMatch ( rcv.Name , @"^[A-Za-z0-9-]{4,12}$" ) ) {
 				client.Send ( P_101.New ( "Somente letras e números no nome. 4 a 12 caracteres." ) );
 			} else {
-				client.Send ( P_101.New ( $"Criar personagem [{rcv.Name}, {rcv.Slot}, {rcv.ClassInfo}]" ) );
+				if ( !client.Account.CreateCharacter ( rcv.Name , rcv.ClassInfo , rcv.Slot ) ) {
+					client.Send ( P_101.New ( "Algo não ocorreu corretamente. Tente novamente!" ) );
+				} else {
+					client.Send ( P_110.New ( client ) );
+					client.Send ( P_101.New ( $"Personagem {rcv.Name} criado! Bom jogo!" ) );
+				}
 			}
 		}
 	}
