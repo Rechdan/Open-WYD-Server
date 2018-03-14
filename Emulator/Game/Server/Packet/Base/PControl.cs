@@ -43,7 +43,7 @@
 						switch ( header.PacketID ) {
 							case 0x020F: P_20F.Controller ( client , PConvert.ToStruct<P_20F> ( data ) ); break; // Criar personagem
 							case 0x0211: P_211.Controller ( client , PConvert.ToStruct<P_211> ( data ) ); break; // Apagar personagem
-							case 0x0213: break; // Entrar no mundo
+							case 0x0213: P_213.Controller ( client , PConvert.ToStruct<P_213> ( data ) ); break; // Entrar no mundo
 
 							case 0xFDE: P_FDE.Controller ( client , PConvert.ToStruct<P_FDE> ( data ) ); break;  // Alterar senha numérica
 
@@ -54,6 +54,12 @@
 					}
 
 					case ClientStatus.Game: {
+						switch ( header.PacketID ) {
+							case 0x0291: break; // Depois que entra no mundo
+
+							default: client.Send ( P_101.New ( $"UNK: 0x{header.PacketID.ToString ( "X" ).PadLeft ( 4 , '0' )}" ) ); break;
+						}
+
 						break;
 					}
 				}

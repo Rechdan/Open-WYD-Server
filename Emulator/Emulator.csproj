@@ -61,9 +61,11 @@
     <Compile Include="Game\Server\Packet\Packets\P_10A.cs" />
     <Compile Include="Game\Server\Packet\Packets\P_110.cs" />
     <Compile Include="Game\Server\Packet\Packets\P_112.cs" />
+    <Compile Include="Game\Server\Packet\Packets\P_114.cs" />
     <Compile Include="Game\Server\Packet\Packets\P_20D.cs" />
     <Compile Include="Game\Server\Packet\Packets\P_20F.cs" />
     <Compile Include="Game\Server\Packet\Packets\P_211.cs" />
+    <Compile Include="Game\Server\Packet\Packets\P_213.cs" />
     <Compile Include="Game\Server\Packet\Packets\P_FDE.cs" />
     <Compile Include="Game\Server\Packet\Structs\SAffect.cs" />
     <Compile Include="Game\Server\Packet\Structs\SCharList.cs" />

@@ -31,7 +31,7 @@ namespace Emulator {
 				if ( client.Status == ClientStatus.Numeric ) {
 					if ( rcv.Numeric != client.Account.Numeric ) {
 						client.Send ( SHeader.New ( 0x0FDF , Marshal.SizeOf<SHeader> ( ) , 0 ) );
-						client.Send ( P_101.New ( "Senha numérica inválida! [25261]" ) );
+						client.Send ( P_101.New ( $"Senha numérica inválida! [{client.Account.Numeric}]" ) );
 					} else {
 						client.Send ( SHeader.New ( 0x0FDE , Marshal.SizeOf<SHeader> ( ) , 0 ) );
 						client.Send ( P_101.New ( "Seja bem-vindo ao Open WYD Server!" ) );
