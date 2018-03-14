@@ -74,6 +74,7 @@
     <Compile Include="Game\Server\Packet\Structs\SCharList.cs" />
     <Compile Include="Game\Server\Packet\Structs\SCharListEquip.cs" />
     <Compile Include="Game\Server\Packet\Structs\SCharListName.cs" />
+    <Compile Include="Game\Server\Packet\Structs\Score.cs" />
     <Compile Include="Game\Server\Packet\Structs\SHeader.cs" />
     <Compile Include="Game\Server\Packet\Structs\SItem.cs" />
     <Compile Include="Game\Server\Packet\Structs\SItemEF.cs" />

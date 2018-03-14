@@ -57,6 +57,8 @@ namespace Emulator {
 
 			this.Characters [ Slot ] = new Character ( mob );
 
+			Functions.GetCurrentScore ( this.Characters [ Slot ] , true );
+
 			return true;
 		}
 
