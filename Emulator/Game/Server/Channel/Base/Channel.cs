@@ -67,5 +67,16 @@ namespace Emulator {
 			// .ToList serve para se algum cliente for removido não dar erro no .ForEach
 			this.Clients.ToList ( ).ForEach ( c => c.OnTask ( ) );
 		}
+
+		// Retorna ID de cliente disponível
+		public short GetClientId ( ) {
+			for ( short i = Config.Values.Clients.MinCid ; i <= Config.Values.Clients.MaxCid ; i++ ) {
+				if ( !this.Clients.Exists ( a => a.ClientId == i ) ) {
+					return i;
+				}
+			}
+
+			return -1;
+		}
 	}
 }

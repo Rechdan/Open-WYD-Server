@@ -24,9 +24,19 @@ namespace Emulator {
 				if ( character == null ) {
 					client.Close ( );
 				} else {
-					client.Send ( P_114.New ( character ) );
+					short ClientId = client.Channel.GetClientId ( );
 
-					client.Status = ClientStatus.Game;
+					character.Mob.ClientId = ClientId;
+
+					if ( ClientId < Config.Values.Clients.MinCid ) {
+						client.Send ( P_101.New ( "Parece que este canal está lotado. Tente novamente!" ) );
+					} else {
+						client.Send ( P_114.New ( character ) );
+						client.Send ( P_364.New ( character , EnterVision.LogIn ) );
+						client.Send ( P_101.New ( "Uma mensagem qualquer..." ) );
+
+						client.Status = ClientStatus.Game;
+					}
 				}
 			}
 		}

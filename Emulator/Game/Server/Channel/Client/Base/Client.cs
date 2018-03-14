@@ -22,6 +22,8 @@ namespace Emulator {
 		// Conta
 		public Account Account { get; private set; }
 
+		public int ClientId { get; set; }
+
 		// Construtor
 		public Client ( Server Server , Channel Channel , Socket Socket ) {
 			this.Server = Server;

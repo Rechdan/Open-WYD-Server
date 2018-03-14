@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Emulator {
 	public static class Config {
@@ -35,6 +32,14 @@ namespace Emulator {
 				} );
 
 			Game.Run ( );
+		}
+
+		// Valores
+		public static class Values {
+			public static class Clients {
+				// Define o client de 1 a 900 totalizando 899 por canal
+				public const int MinCid = 1, MaxCid = 900;
+			}
 		}
 	}
 }
