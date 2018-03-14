@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Emulator {
+﻿namespace Emulator {
 	public static class PControl {
 		// Atributos
 		private static readonly string Lock = "";
@@ -48,7 +42,7 @@ namespace Emulator {
 					case ClientStatus.Characters: {
 						switch ( header.PacketID ) {
 							case 0x020F: P_20F.Controller ( client , PConvert.ToStruct<P_20F> ( data ) ); break; // Criar personagem
-							case 0x0211: break; // Apagar personagem
+							case 0x0211: P_211.Controller ( client , PConvert.ToStruct<P_211> ( data ) ); break; // Apagar personagem
 							case 0x0213: break; // Entrar no mundo
 
 							case 0xFDE: P_FDE.Controller ( client , PConvert.ToStruct<P_FDE> ( data ) ); break;  // Alterar senha numérica

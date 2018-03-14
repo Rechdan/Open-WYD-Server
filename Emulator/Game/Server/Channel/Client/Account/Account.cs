@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Emulator {
 	public class Account {
@@ -60,6 +56,20 @@ namespace Emulator {
 			}
 
 			this.Characters [ Slot ] = new Character ( mob );
+
+			return true;
+		}
+
+		public bool DeleteCharacter ( string Name , int Slot ) {
+			if ( Name == null ) {
+				throw new Exception ( "Name == null" );
+			} else if ( Slot < 0 || Slot > 3 ) {
+				throw new Exception ( "Slot < 0 || Slot > 3" );
+			} else if ( this.Characters [ Slot ] == null ) {
+				throw new Exception ( $"this.Characters [ {Slot} ] == null" );
+			}
+
+			this.Characters [ Slot ] = null;
 
 			return true;
 		}

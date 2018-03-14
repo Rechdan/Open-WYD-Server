@@ -19,6 +19,8 @@ namespace Emulator {
 
 		// Inicializador
 		public static void Initialize ( ) {
+			Console.Title = "Open WYD Server";
+
 			Game = new Game ( );
 
 			Game
