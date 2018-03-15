@@ -38,21 +38,24 @@ namespace Emulator {
 			} else if ( !Regex.IsMatch ( rcv.Password , @"^[A-Za-z0-9]{4,10}$" ) ) {
 				client.Close ( "Somente letras e números na senha. 4 a 10 caracteres." );
 			} else {
+				// Pequeno LOG da conta
 				Log.Information ( $"UserName: {rcv.UserName}, {rcv.UserName.Length}" );
 				Log.Information ( $"Password: {rcv.Password}, {rcv.Password.Length}" );
 
-				if ( !client.Account.Login ( rcv.UserName , rcv.Password ) ) {
-					client.Close ( "Login ou senha inválido!" );
-				} else {
-					P_10A p010A = P_10A.New ( client );
+				// Define os dados da conta na Account do cliente
+				client.Account.SetLogin ( rcv.UserName , rcv.Password , $"{Config.Random.Next ( 1000 , 9999 )}" , new Character [ 4 ] );
 
-					p010A.UserName = rcv.UserName;
+				// Prepara o pacote de login
+				P_10A p010A = P_10A.New ( client );
 
-					client.Send ( p010A );
-					client.Send ( P_101.New ( $"Entre com sua senha numérica! [{client.Account.Numeric}]" ) );
+				p010A.UserName = rcv.UserName;
 
-					client.Status = ClientStatus.Numeric;
-				}
+				// Envia os pacotes pro login
+				client.Send ( p010A );
+				client.Send ( P_101.New ( $"Entre com sua senha numérica! [{client.Account.Numeric}]" ) );
+
+				// Atualiza o status do cliente
+				client.Status = ClientStatus.Numeric;
 			}
 		}
 	}
