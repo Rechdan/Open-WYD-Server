@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Emulator {
 	/// <summary>
@@ -38,8 +39,6 @@ namespace Emulator {
 
 							character.Mob.LastPosition = SPosition.New ( coord );
 
-							coord.Client = client;
-
 							client.Send ( P_114.New ( character ) );
 
 							P_364 p364 = P_364.New ( character , EnterVision.LogIn );
@@ -52,11 +51,11 @@ namespace Emulator {
 							client.Character = character;
 							client.Surround = new Surround ( client );
 
-							client.Surround.GetSurrounds ( ).ForEach ( a => {
+							List<object> surrounds = client.Surround.UpdateSurrounds ( );
+
+							surrounds.ForEach ( a => {
 								switch ( a ) {
 									case Client client2: {
-										client2.Surround.AddToSurrounds ( client );
-
 										client.Send ( P_364.New ( client2.Character , EnterVision.Normal ) );
 										client2.Send ( p364 );
 										break;
@@ -65,6 +64,10 @@ namespace Emulator {
 							} );
 
 							client.Send ( P_101.New ( "Seja bem-vindo ao mundo do Open WYD Server!" ) );
+
+							client.Surround.SetSurrounds ( surrounds );
+
+							coord.Client = client;
 
 							return;
 						}

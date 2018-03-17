@@ -15,7 +15,7 @@ namespace Emulator {
 		public Surround ( object Obj ) {
 			this.Obj = Obj;
 
-			this.Surrounds = this.UpdateSurrounds ( );
+			this.Surrounds = new List<object> ( );
 		}
 
 		// Atualiza os arredores
@@ -52,6 +52,8 @@ namespace Emulator {
 					if ( coord != null ) {
 						if ( coord.Client != null ) {
 							surrounds.Add ( coord.Client );
+
+							coord.Client.Surround.AddToSurrounds ( this.Obj );
 						}
 					}
 				}
