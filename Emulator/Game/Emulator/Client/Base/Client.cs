@@ -117,13 +117,25 @@ namespace Emulator {
 		// Desconecta o cliente
 		public void Close ( ) {
 			if ( this.Active ) {
+				// Define que o cliente está inativo
 				this.Active = false;
 
+				// Atualiza o status do cliente
+				this.Status = ClientStatus.Disconnect;
+
+				// Log
 				Log.Conn ( this , false );
 
+				// Fecha a conexão com o emulador
 				this.Socket.Close ( 2000 );
 				this.Socket = null;
 
+				// Verifica se está no mundo
+				if ( this.Status == ClientStatus.Game ) {
+					Functions.RemoveFromWorld ( this );
+				}
+
+				// Remove o cliente do canal
 				this.Channel.Clients.Remove ( this );
 			}
 		}

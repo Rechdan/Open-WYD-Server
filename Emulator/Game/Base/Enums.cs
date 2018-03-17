@@ -9,4 +9,11 @@
 		Flexao = 16,
 		Sentado = 32
 	}
+
+	public enum LeaveVision : int {
+		Normal = 0,
+		Morrer = 1,
+		LogOut = 2,
+		Teleport = 3
+	}
 }

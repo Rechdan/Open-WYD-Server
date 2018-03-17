@@ -372,5 +372,29 @@ namespace Emulator {
 
 			return null;
 		}
+
+		// Remove cliente do mundo
+		public static void RemoveFromWorld ( Client client ) {
+			// Limpa cliente da sua posição e então limpa o mapa
+			client.Map.GetCoord ( client.Character.Mob.LastPosition ).Client = null;
+			client.Map = null;
+
+			// Prepara pacote de logout
+			P_165 p165 = P_165.New ( client.ClientId , LeaveVision.LogOut );
+
+			// Atualiza os arredores, agora sem esse cliente
+			client.Surround.UpdateSurrounds ( null , null , left => {
+				// Varre os que estavam na visão
+				left.ForEach ( a => {
+					switch ( a ) {
+						case Client client2: {
+							// Envia o logout pra eles
+							client2.Send ( p165 );
+							break;
+						}
+					}
+				} );
+			} );
+		}
 	}
 }
