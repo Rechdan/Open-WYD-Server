@@ -330,5 +330,47 @@ namespace Emulator {
 			}
 			#endregion
 		}
+
+		// Retorna uma coordenada livre para respawn
+		public static Coord GetFreeRespawnCoord ( Map Map , Character Character ) {
+			int city = Character.Mob.CityId;
+
+			int minX, maxX, minY, maxY;
+
+			// Filtra a cidade
+			switch ( city ) {
+				case 0: minX = 2085; maxX = 2110; minY = 2095; maxY = 2108; break; // 364 espaços para logar
+				default: minX = 0; maxX = 0; minY = 0; maxY = 0; break;
+			}
+
+			// Válida as coordenadas
+			if ( minX == 0 || maxX == 0 || minY == 0 || maxY == 0 ) {
+				throw new Exception ( $"CityId {city} not found" );
+			}
+
+			// Prepara uma lista de coordenadas
+			List<Coord> coords = new List<Coord> ( );
+
+			for ( int x = minX ; x <= maxX ; x++ ) {
+				for ( int y = minY ; y <= maxY ; y++ ) {
+					Coord coord = Map.GetCoord ( x , y );
+
+					if ( coord.CanWalk ) {
+						coords.Add ( coord );
+					}
+				}
+			}
+
+			// Remove as coordenadas que não se pode andar
+			coords.RemoveAll ( a => !a.CanWalk );
+
+			// Verifica se há coordenadas disponíveis
+			if ( coords.Count > 0 ) {
+				// Retorna uma coordenada aleatória
+				return coords [ Config.Random.Next ( 0 , coords.Count ) ];
+			}
+
+			return null;
+		}
 	}
 }

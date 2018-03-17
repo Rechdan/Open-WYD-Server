@@ -16,6 +16,8 @@ namespace Emulator {
 
 		public List<Client> Clients { get; private set; }
 
+		public Map Map { get; private set; }
+
 		// Construtor
 		public Channel ( Server Server , string ip ) {
 			this.Server = Server;
@@ -30,6 +32,8 @@ namespace Emulator {
 				this.Active = true;
 
 				this.Clients = new List<Client> ( );
+
+				this.Map = new Map ( this );
 
 				this.BeginAccept ( );
 
@@ -66,6 +70,8 @@ namespace Emulator {
 			// Varre os clientes
 			// .ToList serve para se algum cliente for removido não dar erro no .ForEach
 			this.Clients.ToList ( ).ForEach ( c => c.OnTask ( ) );
+
+			this.Map.OnTask ( );
 		}
 
 		// Retorna ID de cliente disponível

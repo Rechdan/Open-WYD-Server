@@ -52,6 +52,11 @@ namespace Emulator {
 				// Define o client de 1 a 900 totalizando 899 por canal
 				public const int MinCid = 1, MaxCid = 900;
 			}
+
+			public static class Field {
+				// Limite do campo de visão
+				public const int View = 22;
+			}
 		}
 
 		// Carrega o mapa

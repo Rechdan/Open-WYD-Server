@@ -26,16 +26,48 @@ namespace Emulator {
 				} else {
 					short ClientId = client.Channel.GetClientId ( );
 
-					character.Mob.ClientId = ClientId;
-
 					if ( ClientId < Config.Values.Clients.MinCid ) {
 						client.Send ( P_101.New ( "Parece que este canal está lotado. Tente novamente!" ) );
 					} else {
-						client.Send ( P_114.New ( character ) );
-						client.Send ( P_364.New ( character , EnterVision.LogIn ) );
-						client.Send ( P_101.New ( "Uma mensagem qualquer..." ) );
+						Coord coord = Functions.GetFreeRespawnCoord ( client.Channel.Map , character );
 
-						client.Status = ClientStatus.Game;
+						if ( coord == null ) {
+							client.Send ( P_101.New ( "Parece que este o mapa está lotado. Tente novamente!" ) );
+						} else {
+							client.ClientId = character.Mob.ClientId = ClientId;
+
+							character.Mob.LastPosition = SPosition.New ( coord );
+
+							coord.Client = client;
+
+							client.Send ( P_114.New ( character ) );
+
+							P_364 p364 = P_364.New ( character , EnterVision.LogIn );
+
+							client.Send ( p364 );
+
+							client.Status = ClientStatus.Game;
+
+							client.Map = client.Channel.Map;
+							client.Character = character;
+							client.Surround = new Surround ( client );
+
+							client.Surround.GetSurrounds ( ).ForEach ( a => {
+								switch ( a ) {
+									case Client client2: {
+										client2.Surround.AddToSurrounds ( client );
+
+										client.Send ( P_364.New ( client2.Character , EnterVision.Normal ) );
+										client2.Send ( p364 );
+										break;
+									}
+								}
+							} );
+
+							client.Send ( P_101.New ( "Seja bem-vindo ao mundo do Open WYD Server!" ) );
+
+							return;
+						}
 					}
 				}
 			}

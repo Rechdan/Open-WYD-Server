@@ -24,6 +24,12 @@ namespace Emulator {
 
 		public int ClientId { get; set; }
 
+		public Map Map { get; set; }
+
+		public Character Character { get; set; }
+
+		public Surround Surround { get; set; }
+
 		// Construtor
 		public Client ( Server Server , Channel Channel , Socket Socket ) {
 			this.Server = Server;

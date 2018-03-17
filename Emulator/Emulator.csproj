@@ -50,6 +50,7 @@
     <Compile Include="Game\Base\Misc\Program.cs" />
     <Compile Include="Game\Emulator\Channel\Map\Coord.cs" />
     <Compile Include="Game\Emulator\Channel\Map\Map.cs" />
+    <Compile Include="Game\Emulator\Channel\Map\Surrounds.cs" />
     <Compile Include="Game\Emulator\Server\Base\Server.cs" />
     <Compile Include="Game\Emulator\Channel\Base\Channel.cs" />
     <Compile Include="Game\Emulator\Client\Account\Account.cs" />
