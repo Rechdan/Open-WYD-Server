@@ -71,6 +71,7 @@
     <Compile Include="Game\Packet\Packets\P_20F.cs" />
     <Compile Include="Game\Packet\Packets\P_211.cs" />
     <Compile Include="Game\Packet\Packets\P_213.cs" />
+    <Compile Include="Game\Packet\Packets\P_333.cs" />
     <Compile Include="Game\Packet\Packets\P_364.cs" />
     <Compile Include="Game\Packet\Packets\P_FDE.cs" />
     <Compile Include="Game\Packet\Structs\SAffect.cs" />

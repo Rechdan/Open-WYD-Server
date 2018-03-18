@@ -56,6 +56,7 @@
 					case ClientStatus.Game: {
 						switch ( header.PacketID ) {
 							case 0x0291: break; // Depois que entra no mundo
+							case 0x0333: P_333.Controller ( client , PConvert.ToStruct<P_333> ( data ) ); break; // Chat aberto
 							case 0x03AE: break; // 5 segundos
 
 							default: client.Send ( P_101.New ( $"UNK: 0x{header.PacketID.ToString ( "X" ).PadLeft ( 4 , '0' )}" ) ); break;

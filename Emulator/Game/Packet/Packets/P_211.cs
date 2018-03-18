@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace Emulator {
@@ -26,20 +25,8 @@ namespace Emulator {
 		public byte [ ] Unk2;           // 42 a 43	= 2
 
 		// Ajudantes
-		public string Name {
-			get => Functions.GetString ( this.NameBytes );
-			set {
-				this.NameBytes = Config.Encoding.GetBytes ( value );
-				Array.Resize ( ref this.NameBytes , 12 );
-			}
-		}
-		public string Password {
-			get => Functions.GetString ( this.PasswordBytes );
-			set {
-				this.PasswordBytes = Config.Encoding.GetBytes ( value );
-				Array.Resize ( ref this.PasswordBytes , 10 );
-			}
-		}
+		public string Name => Functions.GetString ( this.NameBytes );
+		public string Password => Functions.GetString ( this.PasswordBytes );
 
 		// Controlador
 		public static void Controller ( Client client , P_211 rcv ) {

@@ -14,7 +14,7 @@ namespace Emulator {
 		public SMob Mob;            // 16 a 1351		= 1336
 
 		[MarshalAs ( UnmanagedType.ByValArray , SizeConst = 360 )]
-		public byte [ ] Unk1;         // 1352 a 1711	= 360
+		public byte [ ] Unk1;       // 1352 a 1711	= 360
 
 		// Construtores
 		public static P_114 New ( Character character ) {

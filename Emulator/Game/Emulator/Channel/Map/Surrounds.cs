@@ -11,15 +11,11 @@ namespace Emulator {
 
 		private List<object> Surrounds { get; set; }
 
-		public bool Respawn { get; set; }
-
 		// Construtor
 		public Surround ( object Obj ) {
 			this.Obj = Obj;
 
 			this.Surrounds = new List<object> ( );
-
-			this.Respawn = true;
 		}
 
 		// Retorna os arredores

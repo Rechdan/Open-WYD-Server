@@ -375,8 +375,10 @@ namespace Emulator {
 
 		// Remove cliente do mundo
 		public static void RemoveFromWorld ( Client client ) {
-			// Limpa cliente da sua posição e então limpa o mapa
+			// Limpa cliente da sua posição
 			client.Map.GetCoord ( client.Character.Mob.LastPosition ).Client = null;
+
+			// Limpa a variável do mapa para que, no UpdateSurrounds, todos os clientes que tenham a visão deste o removam
 			client.Map = null;
 
 			// Prepara pacote de logout
@@ -388,7 +390,7 @@ namespace Emulator {
 				left.ForEach ( a => {
 					switch ( a ) {
 						case Client client2: {
-							// Envia o logout pra eles
+							// Envia o logout para os outros clientes
 							client2.Send ( p165 );
 							break;
 						}
