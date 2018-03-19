@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -20,7 +18,7 @@ namespace Emulator {
 
 		public static Game Game { get; private set; }
 
-		public static sbyte [ , ] Map { get; private set; }
+		private static sbyte [ , ] _HeightMap { get; set; }
 
 		public static SItemList [ ] Itemlist { get; private set; }
 
@@ -58,6 +56,11 @@ namespace Emulator {
 			}
 		}
 
+		// Métodos
+		public static sbyte HeightMap ( SPosition P ) => _HeightMap [ P.X , P.Y ];
+		public static sbyte HeightMap ( Coord C ) => _HeightMap [ C.X , C.Y ];
+		public static sbyte HeightMap ( int X , int Y ) => _HeightMap [ X , Y ];
+
 		// Método de load de arquivos
 		private static void LoadGameFiles ( ) {
 			try {
@@ -80,17 +83,17 @@ namespace Emulator {
 
 		// Carrega o HeightMap.dat
 		public static void LoadHeightMap ( ) {
-			bool update = ( Map != null );
+			bool update = ( _HeightMap != null );
 
 			DateTime start = Time;
 
-			Map = new sbyte [ 4096 , 4096 ];
+			_HeightMap = new sbyte [ 4096 , 4096 ];
 
 			byte [ ] load = File.ReadAllBytes ( $"{Dir}HeightMap.dat" );
 
 			for ( int y = 0 ; y < 4096 ; y++ ) {
 				for ( int x = 0 ; x < 4096 ; x++ ) {
-					Map [ x , y ] = ( sbyte ) ( load [ ( x + y * 4096 ) ] );
+					_HeightMap [ x , y ] = ( sbyte ) ( load [ ( x + y * 4096 ) ] );
 				}
 			}
 
