@@ -112,7 +112,8 @@ namespace Emulator {
 				}
 
 				return offset;
-			} catch {
+			}
+			catch {
 				return -1;
 			}
 		}

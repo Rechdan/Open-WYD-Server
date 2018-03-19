@@ -32,18 +32,22 @@ namespace Emulator {
 		public static void Controller ( Client client , P_211 rcv ) {
 			if ( !Regex.IsMatch ( rcv.Name , @"^[A-Za-z0-9-]{4,12}$" ) ) {
 				client.Close ( "Nome inválido!" );
-			} else if ( rcv.Slot < 0 || rcv.Slot > 3 ) {
+			}
+			else if ( rcv.Slot < 0 || rcv.Slot > 3 ) {
 				client.Close ( );
-			} else if ( !Regex.IsMatch ( rcv.Password , @"^[A-Za-z0-9]{4,10}$" ) ) {
+			}
+			else if ( !Regex.IsMatch ( rcv.Password , @"^[A-Za-z0-9]{4,10}$" ) ) {
 				client.Close ( );
-			} else {
+			}
+			else {
 				// Retorna character da conta
 				ref Character character = ref client.Account.Characters [ rcv.Slot ];
 
 				// Verifica se está vaziu
 				if ( character == null ) {
 					client.Close ( );
-				} else {
+				}
+				else {
 					// Envia os pacotes de apagar personagem
 					client.Send ( P_112.New ( client ) );
 					client.Send ( P_101.New ( $"Personagem [{rcv.Name}] deletado!" ) );

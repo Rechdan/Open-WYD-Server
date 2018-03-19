@@ -63,7 +63,8 @@ namespace Emulator {
 
 					tmp.Gold [ i ] = 0;
 					tmp.Exp [ i ] = 0;
-				} else {
+				}
+				else {
 					SMob mob = client.Account.Characters [ i ].Mob;
 
 					tmp.PosX [ i ] = mob.LastPosition.X;

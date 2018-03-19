@@ -70,7 +70,8 @@ namespace Emulator {
 				ReadItemName ( );
 
 				Log.Line ( );
-			} catch ( Exception ex ) {
+			}
+			catch ( Exception ex ) {
 				Log.Error ( ex );
 				Console.ReadKey ( true );
 				Environment.Exit ( 0 );

@@ -35,9 +35,11 @@ namespace Emulator {
 		public static void Controller ( Client client , P_20D rcv ) {
 			if ( !Regex.IsMatch ( rcv.UserName , @"^[A-Za-z0-9]{4,12}$" ) ) {
 				client.Close ( "Somente letras e números no login. 4 a 12 caracteres." );
-			} else if ( !Regex.IsMatch ( rcv.Password , @"^[A-Za-z0-9]{4,10}$" ) ) {
+			}
+			else if ( !Regex.IsMatch ( rcv.Password , @"^[A-Za-z0-9]{4,10}$" ) ) {
 				client.Close ( "Somente letras e números na senha. 4 a 10 caracteres." );
-			} else {
+			}
+			else {
 				// Pequeno LOG da conta
 				Log.Information ( $"UserName: {rcv.UserName}, {rcv.UserName.Length}" );
 				Log.Information ( $"Password: {rcv.Password}, {rcv.Password.Length}" );

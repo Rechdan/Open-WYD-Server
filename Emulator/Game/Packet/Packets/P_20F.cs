@@ -27,18 +27,22 @@ namespace Emulator {
 		public static void Controller ( Client client , P_20F rcv ) {
 			if ( !Regex.IsMatch ( rcv.Name , @"^[A-Za-z0-9-]{4,12}$" ) ) {
 				client.Send ( P_101.New ( "Somente letras e números no nome. 4 a 12 caracteres." ) );
-			} else if ( rcv.Slot < 0 || rcv.Slot > 3 ) {
+			}
+			else if ( rcv.Slot < 0 || rcv.Slot > 3 ) {
 				client.Close ( );
-			} else if ( rcv.ClassInfo < 0 || rcv.ClassInfo > 3 ) {
+			}
+			else if ( rcv.ClassInfo < 0 || rcv.ClassInfo > 3 ) {
 				client.Close ( );
-			} else {
+			}
+			else {
 				// Retorna character da conta
 				ref Character character = ref client.Account.Characters [ rcv.Slot ];
 
 				// Verifica se não está vaziu
 				if ( character != null ) {
 					client.Close ( );
-				} else {
+				}
+				else {
 					// Inicializa novo character
 					character = new Character ( );
 

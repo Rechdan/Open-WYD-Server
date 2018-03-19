@@ -6,9 +6,11 @@ namespace Emulator {
 		static void Main ( string [ ] args ) {
 			try {
 				Config.Initialize ( );
-			} catch ( Exception ex ) {
+			}
+			catch ( Exception ex ) {
 				Log.Error ( ex );
-			} finally {
+			}
+			finally {
 				Process.GetCurrentProcess ( ).WaitForExit ( );
 			}
 		}

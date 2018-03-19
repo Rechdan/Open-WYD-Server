@@ -23,7 +23,8 @@ namespace Emulator {
 		public Coord GetCoord ( int X , int Y ) {
 			if ( X < 0 || X > 4095 ) {
 				throw new Exception ( $"X: 0 > {X} > 4095" );
-			} else if ( Y < 0 || Y > 4095 ) {
+			}
+			else if ( Y < 0 || Y > 4095 ) {
 				throw new Exception ( $"Y: 0 > {Y} > 4095" );
 			}
 

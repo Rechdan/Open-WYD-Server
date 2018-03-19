@@ -25,26 +25,31 @@ namespace Emulator {
 		public static void Controller ( Client client , P_FDE rcv ) {
 			if ( !Regex.IsMatch ( rcv.Numeric , @"^[0-9]{4,6}$" ) ) {
 				client.Close ( "Senha numérica inválida!" );
-			} else {
+			}
+			else {
 				Log.Information ( $"Numeric: {rcv.Numeric}, {rcv.Numeric.Length}" );
 
 				if ( client.Status == ClientStatus.Numeric ) {
 					if ( rcv.Numeric != client.Account.Numeric ) {
 						client.Send ( SHeader.New ( 0x0FDF , Marshal.SizeOf<SHeader> ( ) , 0 ) );
 						client.Send ( P_101.New ( $"Senha numérica inválida! [{client.Account.Numeric}]" ) );
-					} else {
+					}
+					else {
 						client.Send ( SHeader.New ( 0x0FDE , Marshal.SizeOf<SHeader> ( ) , 0 ) );
 						client.Send ( P_101.New ( "Seja bem-vindo ao Open WYD Server!" ) );
 
 						client.Status = ClientStatus.Characters;
 					}
-				} else if ( client.Status == ClientStatus.Characters ) {
+				}
+				else if ( client.Status == ClientStatus.Characters ) {
 					if ( rcv.Change != 1 ) {
 						client.Close ( );
-					} else {
+					}
+					else {
 						client.Send ( P_101.New ( "Alterar senha numérica em desenvolvimento!" ) );
 					}
-				} else {
+				}
+				else {
 					client.Close ( );
 				}
 			}

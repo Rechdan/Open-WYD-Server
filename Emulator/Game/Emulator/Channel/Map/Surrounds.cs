@@ -31,7 +31,8 @@ namespace Emulator {
 		public void AddToSurrounds ( object o ) {
 			if ( this.Surrounds == null ) {
 				throw new Exception ( "this.Surrounds == null" );
-			} else if ( o == null ) {
+			}
+			else if ( o == null ) {
 				throw new Exception ( "o == null" );
 			}
 
@@ -42,7 +43,8 @@ namespace Emulator {
 		public void RmvFromSurrounds ( object o ) {
 			if ( this.Surrounds == null ) {
 				throw new Exception ( "this.Surrounds == null" );
-			} else if ( o == null ) {
+			}
+			else if ( o == null ) {
 				throw new Exception ( "o == null" );
 			}
 

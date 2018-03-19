@@ -42,9 +42,11 @@ namespace Emulator {
 				try {
 					// Varre os servidores
 					this.Servers.ForEach ( s => s.OnTask ( ) );
-				} catch ( Exception ex ) {
+				}
+				catch ( Exception ex ) {
 					Log.Error ( ex );
-				} finally {
+				}
+				finally {
 					await Task.Delay ( 1 );
 				}
 			}

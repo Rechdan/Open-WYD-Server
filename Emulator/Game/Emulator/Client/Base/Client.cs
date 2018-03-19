@@ -56,7 +56,8 @@ namespace Emulator {
 					this.Buffer = new byte [ 1024 ];
 					this.Socket.BeginReceive ( this.Buffer , 0 , this.Buffer.Length , SocketFlags.None , new AsyncCallback ( this.OnReceive ) , null );
 				}
-			} catch ( Exception ex ) {
+			}
+			catch ( Exception ex ) {
 				Log.Error ( ex );
 			}
 		}
@@ -68,13 +69,15 @@ namespace Emulator {
 
 				if ( size <= 0 ) {
 					this.Close ( );
-				} else {
+				}
+				else {
 					byte [ ] tmp = this.Buffer.Take ( size ).ToArray ( );
 
 					if ( this.Status == ClientStatus.Connection ) {
 						if ( size == 4 ) {
 							return;
-						} else if ( size == 120 ) {
+						}
+						else if ( size == 120 ) {
 							tmp = tmp.Skip ( 4 ).ToArray ( );
 						}
 
@@ -92,9 +95,11 @@ namespace Emulator {
 
 					PControl.Controller ( this , tmp );
 				}
-			} catch ( Exception ex ) {
+			}
+			catch ( Exception ex ) {
 				Log.Error ( ex );
-			} finally {
+			}
+			finally {
 				this.BeginReceive ( );
 			}
 		}
@@ -103,7 +108,8 @@ namespace Emulator {
 		public void Send<T> ( T o ) {
 			if ( o == null ) {
 				throw new Exception ( "" );
-			} else {
+			}
+			else {
 				byte [ ] send = PConvert.ToByteArray ( o );
 
 				Log.Snd ( this , PConvert.ToStruct<SHeader> ( send ) );

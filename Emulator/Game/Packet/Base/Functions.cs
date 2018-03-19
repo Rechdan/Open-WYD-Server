@@ -22,12 +22,14 @@ namespace Emulator {
 
 			if ( Mont ) {
 				value = ( byte ) ( Math.Floor ( ( double ) ( Item.Ef [ 1 ].Type / 10 ) ) );
-			} else {
+			}
+			else {
 				for ( int i = 0 ; i < Item.Ef.Length ; i++ ) {
 					if ( Item.Ef [ i ].Type == 43 ) {
 						value = Item.Ef [ i ].Value;
 						break;
-					} else if ( Item.Ef [ i ].Type >= 116 && Item.Ef [ i ].Type <= 125 ) {
+					}
+					else if ( Item.Ef [ i ].Type >= 116 && Item.Ef [ i ].Type <= 125 ) {
 						value = Item.Ef [ i ].Value;
 						colored = true;
 						break;
@@ -37,20 +39,27 @@ namespace Emulator {
 				if ( value > 9 && !colored ) {
 					if ( value >= 230 && value <= 233 ) {
 						value = 10;
-					} else if ( value >= 234 && value <= 237 ) {
+					}
+					else if ( value >= 234 && value <= 237 ) {
 						value = 11;
-					} else if ( value >= 238 && value <= 241 ) {
+					}
+					else if ( value >= 238 && value <= 241 ) {
 						value = 12;
-					} else if ( value >= 242 && value <= 245 ) {
+					}
+					else if ( value >= 242 && value <= 245 ) {
 						value = 13;
-					} else if ( value >= 246 && value <= 249 ) {
+					}
+					else if ( value >= 246 && value <= 249 ) {
 						value = 14;
-					} else if ( value >= 250 && value <= 253 ) {
+					}
+					else if ( value >= 250 && value <= 253 ) {
 						value = 15;
-					} else {
+					}
+					else {
 						value = 0;
 					}
-				} else if ( colored ) {
+				}
+				else if ( colored ) {
 					if ( value > 9 ) {
 						value = 9;
 					}
@@ -66,12 +75,14 @@ namespace Emulator {
 
 			if ( Mont ) {
 				return 0;
-			} else {
+			}
+			else {
 				for ( int i = 0 ; i < Item.Ef.Length ; i++ ) {
 					if ( Item.Ef [ i ].Type == 43 ) {
 						value = Item.Ef [ i ].Value;
 						break;
-					} else if ( Item.Ef [ i ].Type >= 116 && Item.Ef [ i ].Type <= 125 ) {
+					}
+					else if ( Item.Ef [ i ].Type >= 116 && Item.Ef [ i ].Type <= 125 ) {
 						return Item.Ef [ i ].Type;
 					}
 				}
@@ -109,7 +120,8 @@ namespace Emulator {
 		public static double GetItemSancValue ( int Slot , byte Sanc ) {
 			if ( Slot == 0 || Slot == 14 ) {
 				return 0;
-			} else {
+			}
+			else {
 				if ( Slot >= 1 && Slot <= 7 ) {
 					switch ( Sanc ) {
 						case 1:
@@ -163,7 +175,8 @@ namespace Emulator {
 						default:
 							return 1;
 					}
-				} else if ( Slot >= 8 && Slot <= 15 ) {
+				}
+				else if ( Slot >= 8 && Slot <= 15 ) {
 					switch ( Sanc ) {
 						case 1:
 							return 1.1;
@@ -216,7 +229,8 @@ namespace Emulator {
 						default:
 							return 1;
 					}
-				} else {
+				}
+				else {
 					return 1;
 				}
 			}
@@ -253,9 +267,11 @@ namespace Emulator {
 
 			if ( montID >= 2360 && montID <= 2361 ) {
 				mountSpeed = 4;
-			} else if ( montID >= 2362 && montID <= 2365 ) {
+			}
+			else if ( montID >= 2362 && montID <= 2365 ) {
 				mountSpeed = 5;
-			} else if ( montID >= 2366 && montID <= 2389 ) {
+			}
+			else if ( montID >= 2366 && montID <= 2389 ) {
 				mountSpeed = 6;
 			}
 
@@ -503,10 +519,12 @@ namespace Emulator {
 						if ( sanc == 9 || ( sanc >= 230 && sanc <= 253 ) ) {
 							status.Defense += 25;
 						}
-					} else if ( i == 5 ) {
+					}
+					else if ( i == 5 ) {
 						if ( sanc == 9 ) {
 							bootsSpeed += 1;
-						} else if ( sanc >= 230 && sanc <= 253 ) {
+						}
+						else if ( sanc >= 230 && sanc <= 253 ) {
 							bootsSpeed += 2;
 						}
 					}
@@ -526,19 +544,24 @@ namespace Emulator {
 					for ( int i = 0 ; i < level ; i++ ) {
 						if ( i < 254 ) {
 							statusPoint += 5;
-						} else if ( i < 299 ) {
+						}
+						else if ( i < 299 ) {
 							statusPoint += 10;
-						} else if ( i < 354 ) {
+						}
+						else if ( i < 354 ) {
 							statusPoint += 20;
-						} else if ( i < 399 ) {
+						}
+						else if ( i < 399 ) {
 							statusPoint += 12;
 						}
 
 						if ( i < 199 ) {
 							skillPoint += 3;
-						} else if ( i < 354 ) {
+						}
+						else if ( i < 354 ) {
 							skillPoint += 4;
-						} else if ( i < 399 ) {
+						}
+						else if ( i < 399 ) {
 							skillPoint += 3;
 						}
 
@@ -552,21 +575,25 @@ namespace Emulator {
 					for ( int i = 0 ; i < level ; i++ ) {
 						if ( i < 354 ) {
 							statusPoint += 6;
-						} else if ( i < 399 ) {
+						}
+						else if ( i < 399 ) {
 							statusPoint += 12;
 						}
 
 						if ( i < 354 ) {
 							skillPoint += 4;
-						} else if ( i < 399 ) {
+						}
+						else if ( i < 399 ) {
 							skillPoint += 2;
 						}
 
 						if ( i < 199 ) {
 							masterPoint += 2;
-						} else if ( i < 354 ) {
+						}
+						else if ( i < 354 ) {
 							masterPoint += 3;
-						} else if ( i < 399 ) {
+						}
+						else if ( i < 399 ) {
 							masterPoint += 1;
 						}
 					}
@@ -621,7 +648,8 @@ namespace Emulator {
 
 				status.HP += 80f + ( ( level + status.Con ) * 3f );
 				status.MP += 45f + ( ( level + status.Int ) * 1f );
-			} else if ( mob.ClassInfo == 1 ) { // FM
+			}
+			else if ( mob.ClassInfo == 1 ) { // FM
 				status.Str += 5f;
 				status.Int += 8f;
 				status.Dex += 5f;
@@ -629,7 +657,8 @@ namespace Emulator {
 
 				status.HP += 60f + ( ( level + status.Con ) * 1f );
 				status.MP += 65f + ( ( level + status.Int ) * 3f );
-			} else if ( mob.ClassInfo == 2 ) { // BM
+			}
+			else if ( mob.ClassInfo == 2 ) { // BM
 				status.Str += 6f;
 				status.Int += 6f;
 				status.Dex += 9f;
@@ -637,7 +666,8 @@ namespace Emulator {
 
 				status.HP += 70f + ( ( level + status.Con ) * 1f );
 				status.MP += 55f + ( ( level + status.Int ) * 2f );
-			} else if ( mob.ClassInfo == 3 ) { // HT
+			}
+			else if ( mob.ClassInfo == 3 ) { // HT
 				status.Str += 8f;
 				status.Int += 9f;
 				status.Dex += 13f;
@@ -730,7 +760,8 @@ namespace Emulator {
 			if ( UP ) {
 				mob.GameStatus.CurHP = mob.GameStatus.MaxHP;
 				mob.GameStatus.CurMP = mob.GameStatus.MaxMP;
-			} else {
+			}
+			else {
 				if ( mob.GameStatus.CurHP > mob.GameStatus.MaxHP ) {
 					mob.GameStatus.CurHP = mob.GameStatus.MaxHP;
 				}

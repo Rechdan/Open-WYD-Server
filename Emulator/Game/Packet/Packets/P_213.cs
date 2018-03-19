@@ -18,25 +18,29 @@ namespace Emulator {
 		public static void Controller ( Client client , P_213 rcv ) {
 			if ( rcv.Slot < 0 || rcv.Slot > 3 ) {
 				client.Close ( );
-			} else {
+			}
+			else {
 				// Retorna o personagem selecionado
 				Character character = client.Account.Characters [ rcv.Slot ];
 
 				if ( character == null ) {
 					client.Close ( );
-				} else {
+				}
+				else {
 					// Retorna um ClientId vaziu
 					short ClientId = client.Channel.GetClientId ( );
 
 					if ( ClientId < Config.Values.Clients.MinCid ) {
 						client.Send ( P_101.New ( "Parece que este canal está lotado. Tente novamente!" ) );
-					} else {
+					}
+					else {
 						// Retorna a posição de respawn
 						Coord coord = Functions.GetFreeRespawnCoord ( client.Channel.Map , character );
 
 						if ( coord == null ) {
 							client.Send ( P_101.New ( "Parece que este o mapa está lotado. Tente novamente!" ) );
-						} else {
+						}
+						else {
 							// Define o ClientId do cliente
 							client.ClientId = character.Mob.ClientId = ClientId;
 

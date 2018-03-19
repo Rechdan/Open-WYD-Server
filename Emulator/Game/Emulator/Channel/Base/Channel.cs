@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Emulator {
 	public class Channel {
@@ -45,7 +43,8 @@ namespace Emulator {
 		private void BeginAccept ( ) {
 			try {
 				this.Socket.BeginAccept ( new AsyncCallback ( this.OnAccept ) , null );
-			} catch ( Exception ex ) {
+			}
+			catch ( Exception ex ) {
 				Log.Error ( ex );
 			}
 		}
@@ -58,9 +57,11 @@ namespace Emulator {
 				if ( s != null ) {
 					this.Clients.Add ( new Client ( this.Server , this , s ) );
 				}
-			} catch ( Exception ex ) {
+			}
+			catch ( Exception ex ) {
 				Log.Error ( ex );
-			} finally {
+			}
+			finally {
 				this.BeginAccept ( );
 			}
 		}
