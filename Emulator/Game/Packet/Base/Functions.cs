@@ -94,44 +94,455 @@ namespace Emulator {
 			}
 		}
 
+		// Retorna o valor da refinação
+		public static byte GetItemSanc ( SItem Item ) {
+			for ( int i = 0 ; i < Item.Ef.Length ; i++ ) {
+				if ( Item.Ef [ i ].Type == 43 || Item.Ef [ i ].Type >= 116 && Item.Ef [ i ].Type <= 125 ) {
+					return Item.Ef [ i ].Value;
+				}
+			}
+
+			return 0;
+		}
+
+		// Retorna quantas vezes o valor da refinação aumenta o status do item
+		public static double GetItemSancValue ( int Slot , byte Sanc ) {
+			if ( Slot == 0 || Slot == 14 ) {
+				return 0;
+			} else {
+				if ( Slot >= 1 && Slot <= 7 ) {
+					switch ( Sanc ) {
+						case 1:
+							return 1.1;
+						case 2:
+							return 1.2;
+						case 3:
+							return 1.3;
+						case 4:
+							return 1.4;
+						case 5:
+							return 1.5;
+						case 6:
+							return 1.6;
+						case 7:
+							return 1.7;
+						case 8:
+							return 1.8;
+						case 9:
+							return 1.9;
+						case 230:
+						case 231:
+						case 232:
+						case 233:
+							return 2;
+						case 234:
+						case 235:
+						case 236:
+						case 237:
+							return 2.2;
+						case 238:
+						case 239:
+						case 240:
+						case 241:
+							return 2.5;
+						case 242:
+						case 243:
+						case 244:
+						case 245:
+							return 2.8;
+						case 246:
+						case 247:
+						case 248:
+						case 249:
+							return 3.2;
+						case 250:
+						case 251:
+						case 252:
+						case 253:
+							return 3.7;
+						default:
+							return 1;
+					}
+				} else if ( Slot >= 8 && Slot <= 15 ) {
+					switch ( Sanc ) {
+						case 1:
+							return 1.1;
+						case 2:
+							return 1.2;
+						case 3:
+							return 1.3;
+						case 4:
+							return 1.4;
+						case 5:
+							return 1.5;
+						case 6:
+							return 1.6;
+						case 7:
+							return 1.7;
+						case 8:
+							return 1.8;
+						case 9:
+							return 2;
+						case 230:
+						case 231:
+						case 232:
+						case 233:
+							return 2.2;
+						case 234:
+						case 235:
+						case 236:
+						case 237:
+							return 2.5;
+						case 238:
+						case 239:
+						case 240:
+						case 241:
+							return 2.8;
+						case 242:
+						case 243:
+						case 244:
+						case 245:
+							return 3.2;
+						case 246:
+						case 247:
+						case 248:
+						case 249:
+							return 3.7;
+						case 250:
+						case 251:
+						case 252:
+						case 253:
+							return 4;
+						default:
+							return 1;
+					}
+				} else {
+					return 1;
+				}
+			}
+		}
+
 		// Atualiza os status do personagem
-		public static void GetCurrentScore ( Character character , bool UP ) {
-			ref SMob mob = ref character.Mob;
+		public static void GetCurrentScore ( Character Character , bool UP ) {
+			ref SMob mob = ref Character.Mob;
 
 			Score status = Score.New ( );
 
 			int
 				level = mob.BaseStatus.Level,
-				StatusPoint = 0,
-				MasterPoint = 0,
-				SkillPoint = 0;
+				statusPoint = 0,
+				masterPoint = 0,
+				skillPoint = 0;
 
 			double
-				MoveSpeed = 2;
+				moveSpeed = 2,
+				bootsSpeed = 0;
+
+			#region Mounts
+			double
+				mountDamage = 0,
+				mountMagic = 0,
+				mountEvasion = 0,
+				mountResist = 0,
+				mountSpeed = 0;
+
+			byte
+				MountLevel = mob.Equip [ 14 ].Ef [ 1 ].Type;
+
+			short montID = mob.Equip [ 14 ].Id;
+
+			if ( montID >= 2360 && montID <= 2361 ) {
+				mountSpeed = 4;
+			} else if ( montID >= 2362 && montID <= 2365 ) {
+				mountSpeed = 5;
+			} else if ( montID >= 2366 && montID <= 2389 ) {
+				mountSpeed = 6;
+			}
+
+			switch ( montID ) {
+				#region Porco
+				case 2360:
+					break;
+				#endregion
+				#region Javali
+				case 2361:
+					break;
+				#endregion
+				#region Lobo
+				case 2362:
+					mountDamage = 10 + ( MountLevel * 0.5 );
+					mountMagic = 1 + ( MountLevel * 0.1 );
+					break;
+				#endregion
+				#region Dragão Menor
+				case 2363:
+					mountDamage = 16 + ( MountLevel * 0.8 );
+					mountMagic = 2 + ( MountLevel * 0.15 );
+					break;
+				#endregion
+				#region Urso
+				case 2364:
+					mountDamage = 20 + ( MountLevel * 1.0 );
+					mountMagic = 3 + ( MountLevel * 0.2 );
+					break;
+				#endregion
+				#region Dente de Sabre
+				case 2365:
+					mountDamage = 30 + ( MountLevel * 1.5 );
+					mountMagic = 3 + ( MountLevel * 0.25 );
+					break;
+				#endregion
+				#region Cavalo sem Sela N
+				case 2366:
+					mountDamage = 50 + ( MountLevel * 2.5 );
+					mountMagic = 7 + ( MountLevel * 0.5 );
+					mountEvasion = 4;
+					break;
+				#endregion
+				#region Cavalo Fantasm N
+				case 2367:
+					mountDamage = 60 + ( MountLevel * 3.0 );
+					mountMagic = 9 + ( MountLevel * 0.6 );
+					mountEvasion = 5;
+					break;
+				#endregion
+				#region Cavalo Leve N
+				case 2368:
+					mountDamage = 70 + ( MountLevel * 3.5 );
+					mountMagic = 9 + ( MountLevel * 0.65 );
+					mountEvasion = 6;
+					break;
+				#endregion
+				#region Cavalo Equip N
+				case 2369:
+					mountDamage = 80 + ( MountLevel * 4.0 );
+					mountMagic = 10 + ( MountLevel * 0.7 );
+					mountEvasion = 7;
+					break;
+				#endregion
+				#region Andaluz N
+				case 2370:
+					mountDamage = 100 + ( MountLevel * 5.0 );
+					mountMagic = 12 + ( MountLevel * 0.85 );
+					mountEvasion = 8;
+					break;
+				#endregion
+				#region Cavalo sem Sela B
+				case 2371:
+					mountDamage = 50 + ( MountLevel * 2.5 );
+					mountMagic = 7 + ( MountLevel * 0.5 );
+					mountResist = 16;
+					break;
+				#endregion
+				#region Cavalo Fantasm B
+				case 2372:
+					mountDamage = 60 + ( MountLevel * 3.0 );
+					mountMagic = 9 + ( MountLevel * 0.6 );
+					mountResist = 20;
+					break;
+				#endregion
+				#region Cavalo Leve B
+				case 2373:
+					mountDamage = 70 + ( MountLevel * 3.5 );
+					mountMagic = 9 + ( MountLevel * 0.65 );
+					mountResist = 24;
+					break;
+				#endregion
+				#region Cavalo Equip B
+				case 2374:
+					mountDamage = 80 + ( MountLevel * 4.0 );
+					mountMagic = 10 + ( MountLevel * 0.7 );
+					mountResist = 28;
+					break;
+				#endregion
+				#region Andaluz B
+				case 2375:
+					mountDamage = 100 + ( MountLevel * 5.0 );
+					mountMagic = 12 + ( MountLevel * 0.85 );
+					mountResist = 32;
+					break;
+				#endregion
+				#region Fenrir
+				case 2376:
+					mountDamage = 110 + ( MountLevel * 5.5 );
+					mountMagic = 13 + ( MountLevel * 0.9 );
+					break;
+				#endregion
+				#region Dragão
+				case 2377:
+					mountDamage = 120 + ( MountLevel * 6 );
+					mountMagic = 13 + ( MountLevel * 0.9 );
+					break;
+				#endregion
+				#region Fenrir das Sombrar
+				case 2378:
+					mountDamage = 130 + ( MountLevel * 6.5 );
+					mountMagic = 15 + ( MountLevel * 1.0 );
+					mountEvasion = 6;
+					mountResist = 28;
+					break;
+				#endregion
+				#region Tigre de Fogo
+				case 2379:
+					mountDamage = 130 + ( MountLevel * 6.5 );
+					mountMagic = 15 + ( MountLevel * 0.9 );
+					mountEvasion = 6;
+					mountResist = 28;
+					break;
+				#endregion
+				#region Dragão Vermelho
+				case 2380:
+					mountDamage = 140 + ( MountLevel * 7 );
+					mountMagic = 16 + ( MountLevel * 1.1 );
+					mountEvasion = 8;
+					mountResist = 32;
+					break;
+				#endregion
+				#region Unicórnio
+				case 2381:
+					mountDamage = 114 + ( MountLevel * 5.7 );
+					mountMagic = 13 + ( MountLevel * 0.9 );
+					mountEvasion = 2;
+					mountResist = 16;
+					break;
+				#endregion
+				#region Pegasus
+				case 2382:
+					mountDamage = 114 + ( MountLevel * 5.7 );
+					mountMagic = 13 + ( MountLevel * 0.9 );
+					mountEvasion = 3;
+					mountResist = 8;
+					break;
+				#endregion
+				#region Unisus
+				case 2383:
+					mountDamage = 114 + ( MountLevel * 5.7 );
+					mountMagic = 13 + ( MountLevel * 0.9 );
+					mountEvasion = 4;
+					mountResist = 12;
+					break;
+				#endregion
+				#region Grifo
+				case 2384:
+					mountDamage = 118 + ( MountLevel * 5.9 );
+					mountMagic = 14 + ( MountLevel * 0.95 );
+					mountEvasion = 3;
+					mountResist = 20;
+					break;
+				#endregion
+				#region Hipogrifo
+				case 2385:
+					mountDamage = 120 + ( MountLevel * 6 );
+					mountMagic = 14 + ( MountLevel * 0.95 );
+					mountEvasion = 4;
+					mountResist = 16;
+					break;
+				#endregion
+				#region Grifo Sangrento
+				case 2386:
+					mountDamage = 120 + ( MountLevel * 6 );
+					mountMagic = 14 + ( MountLevel * 0.95 );
+					mountEvasion = 5;
+					mountResist = 16;
+					break;
+				#endregion
+				#region Svadilfari
+				case 2387:
+					mountDamage = 120 + ( MountLevel * 6 );
+					mountMagic = 6 + ( MountLevel * 0.4 );
+					mountEvasion = 6;
+					mountResist = 28;
+					break;
+				#endregion
+				#region Sleipnir
+				case 2388:
+					mountDamage = 60 + ( MountLevel * 3 );
+					mountMagic = 14 + ( MountLevel * 0.95 );
+					mountEvasion = 6;
+					mountResist = 28;
+					break;
+				#endregion
+				#region Helriohdon
+				case 2389:
+					mountDamage = 120 + ( MountLevel * 6 );
+					mountMagic = 15 + ( MountLevel * 1 );
+					mountEvasion = 8;
+					mountResist = 28;
+					break;
+					#endregion
+			}
+
+			status.Attack += mountDamage;
+			status.Magic += mountMagic;
+
+			status.Evasion += mountEvasion;
+
+			status.resistFire += mountResist;
+			status.resistIce += mountResist;
+			status.resistHoly += mountResist;
+			status.resistThunder += mountResist;
+			#endregion
+
+			#region Equips
+			for ( int i = 0 ; i < mob.Equip.Length ; i++ ) {
+				if ( i == 6 || i == 7 ) {
+					continue;
+				}
+
+				short itemId = mob.Equip [ i ].Id;
+
+				if ( itemId > 0 ) {
+					SItemList itemList = Config.Itemlist [ itemId ];
+
+					byte sanc = GetItemSanc ( mob.Equip [ i ] );
+					double sanc_value = GetItemSancValue ( i , sanc );
+
+					status += ( ( itemList + mob.Equip [ i ].Ef ) * sanc_value );
+
+					if ( i == 2 || i == 3 ) {
+						if ( sanc == 9 || ( sanc >= 230 && sanc <= 253 ) ) {
+							status.Defense += 25;
+						}
+					} else if ( i == 5 ) {
+						if ( sanc == 9 ) {
+							bootsSpeed += 1;
+						} else if ( sanc >= 230 && sanc <= 253 ) {
+							bootsSpeed += 2;
+						}
+					}
+				}
+			}
+
+			bootsSpeed += status.MoveSpeed;
+
+			moveSpeed += ( bootsSpeed > 3 ? 3 : bootsSpeed );
+
+			//status.Add ( mob.GetWeaponStatus ( ) );
+			#endregion
 
 			#region Pontos
 			switch ( mob.Equip [ 0 ].Ef [ 1 ].Value ) {
 				case 1: { // Mortal
 					for ( int i = 0 ; i < level ; i++ ) {
 						if ( i < 254 ) {
-							StatusPoint += 5;
+							statusPoint += 5;
 						} else if ( i < 299 ) {
-							StatusPoint += 10;
+							statusPoint += 10;
 						} else if ( i < 354 ) {
-							StatusPoint += 20;
+							statusPoint += 20;
 						} else if ( i < 399 ) {
-							StatusPoint += 12;
+							statusPoint += 12;
 						}
 
 						if ( i < 199 ) {
-							SkillPoint += 3;
+							skillPoint += 3;
 						} else if ( i < 354 ) {
-							SkillPoint += 4;
+							skillPoint += 4;
 						} else if ( i < 399 ) {
-							SkillPoint += 3;
+							skillPoint += 3;
 						}
 
-						MasterPoint += 2;
+						masterPoint += 2;
 					}
 
 					break;
@@ -140,23 +551,23 @@ namespace Emulator {
 				case 2: { // Arch
 					for ( int i = 0 ; i < level ; i++ ) {
 						if ( i < 354 ) {
-							StatusPoint += 6;
+							statusPoint += 6;
 						} else if ( i < 399 ) {
-							StatusPoint += 12;
+							statusPoint += 12;
 						}
 
 						if ( i < 354 ) {
-							SkillPoint += 4;
+							skillPoint += 4;
 						} else if ( i < 399 ) {
-							SkillPoint += 2;
+							skillPoint += 2;
 						}
 
 						if ( i < 199 ) {
-							MasterPoint += 2;
+							masterPoint += 2;
 						} else if ( i < 354 ) {
-							MasterPoint += 3;
+							masterPoint += 3;
 						} else if ( i < 399 ) {
-							MasterPoint += 1;
+							masterPoint += 1;
 						}
 					}
 
@@ -172,8 +583,8 @@ namespace Emulator {
 				}
 			}
 
-			StatusPoint -= mob.BaseStatus.Str + mob.BaseStatus.Int + mob.BaseStatus.Dex + mob.BaseStatus.Con;
-			MasterPoint -= mob.BaseStatus.Master.Sum ( a => a );
+			statusPoint -= mob.BaseStatus.Str + mob.BaseStatus.Int + mob.BaseStatus.Dex + mob.BaseStatus.Con;
+			masterPoint -= mob.BaseStatus.Master.Sum ( a => a );
 
 			/*bool[] skills = character.skills;
 
@@ -185,9 +596,9 @@ namespace Emulator {
 				}
 			}*/
 
-			mob.StatusPoint = ( short ) ( StatusPoint );
-			mob.MasterPoint = ( short ) ( MasterPoint );
-			mob.SkillPoint = ( short ) ( SkillPoint );
+			mob.StatusPoint = ( short ) ( statusPoint );
+			mob.MasterPoint = ( short ) ( masterPoint );
+			mob.SkillPoint = ( short ) ( skillPoint );
 			#endregion
 
 			#region Base
@@ -279,7 +690,7 @@ namespace Emulator {
 
 			status.Evasion = ( status.Evasion > short.MaxValue ? short.MaxValue : ( status.Evasion < 0 ? 0 : status.Evasion ) );
 
-			MoveSpeed = ( MoveSpeed > 6 ? 6 : ( MoveSpeed < 1 ? 1 : MoveSpeed ) );
+			moveSpeed = ( moveSpeed > 6 ? 6 : ( moveSpeed < 1 ? 1 : moveSpeed ) );
 			#endregion
 
 			#region Update MOB
@@ -312,7 +723,7 @@ namespace Emulator {
 			mob.ResistHoly = ( byte ) ( status.resistHoly );
 			mob.ResistThunder = ( byte ) ( status.resistThunder );
 
-			mob.GameStatus.MobSpeed = ( byte ) ( MoveSpeed );
+			mob.GameStatus.MobSpeed = ( byte ) ( mountSpeed > 0 ? mountSpeed : moveSpeed );
 			#endregion
 
 			#region Level UP

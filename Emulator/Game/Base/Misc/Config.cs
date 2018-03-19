@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Emulator {
@@ -21,24 +22,22 @@ namespace Emulator {
 
 		public static sbyte [ , ] Map { get; private set; }
 
+		public static SItemList [ ] Itemlist { get; private set; }
+
 		// Inicializador
 		public static void Initialize ( ) {
 			Console.Title = "Open WYD Server";
 
-			Log.Line ( );
-
-			LoadMap ( );
-
-			Log.Line ( );
+			LoadGameFiles ( );
 
 			Game = new Game ( );
 
 			Game
-				.AddServer ( new Server ( "Name 1" ) , server => {
+				.AddServer ( new Server ( "Destiny" ) , server => {
 					server
 						.AddChannel ( new Channel ( server , "192.168.50.100" ) , null );
 				} )
-				.AddServer ( new Server ( "Name 2" ) , server => {
+				.AddServer ( new Server ( "Tests" ) , server => {
 					server
 						.AddChannel ( new Channel ( server , "127.0.0.1" ) , null )
 						.AddChannel ( new Channel ( server , "127.0.0.2" ) , null );
@@ -59,8 +58,27 @@ namespace Emulator {
 			}
 		}
 
-		// Carrega o mapa
-		public static void LoadMap ( ) {
+		// Método de load de arquivos
+		private static void LoadGameFiles ( ) {
+			try {
+				Log.Line ( );
+
+				LoadHeightMap ( );
+
+				LoadItemlist ( );
+
+				ReadItemName ( );
+
+				Log.Line ( );
+			} catch ( Exception ex ) {
+				Log.Error ( ex );
+				Console.ReadKey ( true );
+				Environment.Exit ( 0 );
+			}
+		}
+
+		// Carrega o HeightMap.dat
+		public static void LoadHeightMap ( ) {
 			bool update = ( Map != null );
 
 			DateTime start = Time;
@@ -75,19 +93,55 @@ namespace Emulator {
 				}
 			}
 
-			/*List<sbyte [ ]> print = new List<sbyte [ ]> ( );
-			for ( int x = -25 ; x <= 25 ; x++ ) {
-				List<sbyte> line = new List<sbyte> ( );
-				for ( int y = -25 ; y <= 25 ; y++ ) {
-					line.Add ( Map [ 2100 + x , 2100 + y ] );
-				}
-				print.Add ( line.ToArray ( ) );
+			load = null;
+
+			Log.Information ( $"HeightMap carregado em [{Time - start}]" );
+		}
+
+		// Carrega a ItemList.bin
+		public static void LoadItemlist ( ) {
+			DateTime start = Time;
+
+			byte [ ] read = File.ReadAllBytes ( $"{Dir}ItemList.bin" );
+			int size = read.Length / Marshal.SizeOf<SItemList> ( );
+
+			Itemlist = new SItemList [ size ];
+
+			for ( int i = 0 ; i < read.Length ; i++ ) {
+				read [ i ] ^= 0x5A;
 			}
-			Log.Normal ( $"Test:\n{string.Join ( "\n" , print.Select ( a => string.Join ( "," , a.Select ( b => $"{b}".PadLeft ( 4 , ' ' ) ) ) ) )}" );*/
 
-			//Log.Normal ( t & ( 1 << 10 ) );
+			for ( int i = 0 ; i < Itemlist.Length ; i++ ) {
+				Itemlist [ i ] = PConvert.ToStruct<SItemList> ( read , i * 140 );
+			}
 
-			Log.Information ( $"Mapa carregado em [{Time - start}]" );
+			read = null;
+
+			Log.Information ( $"ItemList, com {size:N0} itens, carregada em [{Time - start}]" );
+		}
+
+		// Lê a Itemname.bin para atualizar os nomes na ItemList
+		public static void ReadItemName ( ) {
+			DateTime start = Time;
+
+			byte [ ] read = File.ReadAllBytes ( $"{Dir}Itemname.bin" );
+			int size = ( int ) ( Math.Floor ( read.Length / 68f ) );
+
+			for ( int i = 0 ; i < read.Length ; i += 68 ) {
+				for ( int j = i + 4, k = 0 ; j < i + 68 ; j++, k++ ) {
+					read [ j ] -= ( byte ) ( k );
+				}
+			}
+
+			for ( int i = 0, id = 0 ; i < read.Length ; i += 68 ) {
+				id = BitConverter.ToInt32 ( read , i );
+
+				Itemlist [ id ].Name = Encoding.Default.GetString ( read , i + 4 , 62 ).Replace ( "\0" , "" );
+			}
+
+			read = null;
+
+			Log.Information ( $"Itemname, com {size:N0} nomes, carregada em [{Time - start}]" );
 		}
 	}
 }

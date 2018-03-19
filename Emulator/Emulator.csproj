@@ -83,6 +83,8 @@
     <Compile Include="Game\Packet\Structs\SHeader.cs" />
     <Compile Include="Game\Packet\Structs\SItem.cs" />
     <Compile Include="Game\Packet\Structs\SItemEF.cs" />
+    <Compile Include="Game\Packet\Structs\SItemList.cs" />
+    <Compile Include="Game\Packet\Structs\SItemListEF.cs" />
     <Compile Include="Game\Packet\Structs\SMob.cs" />
     <Compile Include="Game\Packet\Structs\SPosition.cs" />
     <Compile Include="Game\Packet\Structs\SStatus.cs" />
