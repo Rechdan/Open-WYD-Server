@@ -47,6 +47,10 @@ namespace Emulator {
 							// Define a posição do mob
 							character.Mob.LastPosition = SPosition.New ( coord );
 
+							// Adiciona posição a lista de posições
+							character.Positions.Clear ( );
+							character.Positions.Add ( character.Mob.LastPosition );
+
 							// Define o cliente na coordenada
 							coord.Client = client;
 

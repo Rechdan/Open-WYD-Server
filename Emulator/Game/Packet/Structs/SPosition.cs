@@ -18,19 +18,28 @@ namespace Emulator {
 		public static SPosition New ( int x , int y ) => new SPosition ( ) { X = ( short ) ( x ) , Y = ( short ) ( y ) };
 
 		// Métodos
-		public bool Compare ( SPosition pos2 ) {
-			if ( this.X == pos2.X && this.Y == pos2.Y ) {
-				return true;
-			}
-
-			return false;
-		}
-
 		public int GetDistance ( SPosition other ) {
 			int x = Math.Abs ( this.X - other.X );
 			int y = Math.Abs ( this.Y - other.Y );
 
 			return ( x > y ? x : y );
+		}
+
+		// Altera as checagens de == e !=
+		public static bool operator == ( SPosition a , SPosition b ) => ( a.X == b.X && a.Y == b.Y );
+		public static bool operator != ( SPosition a , SPosition b ) => ( a.X != b.X || a.Y != b.Y );
+
+		// Altera o ToString
+		public override string ToString ( ) => $"{this.X},{this.Y}";
+
+		// Obrigações do C# para quando sobrescrever == e !=
+		public override int GetHashCode ( ) => base.GetHashCode ( );
+
+		public override bool Equals ( object obj ) {
+			switch ( obj ) {
+				case SPosition position: return ( this.X == position.X && this.Y == position.Y );
+				default: return false;
+			}
 		}
 	}
 }

@@ -26,7 +26,7 @@ namespace Emulator {
 
 		public static void Conn ( Client c , bool i ) => Write ( $"Cliente {c.Socket.RemoteEndPoint} se {( i ? "" : "des" )}conectou" , ConsoleColor.Yellow );
 
-		public static void Rcv ( Client c , SHeader h ) => Write ( $"RCV > P: 0x{h.PacketID.ToString ( "X" ).PadLeft ( 4 , '0' )} | S: {h.Size.ToString ( ).PadLeft ( 4 , '0' )} | CID: {h.ClientID.ToString ( ).PadLeft ( 5 , '0' )}" , ConsoleColor.Magenta );
-		public static void Snd ( Client c , SHeader h ) => Write ( $"SND > P: 0x{h.PacketID.ToString ( "X" ).PadLeft ( 4 , '0' )} | S: {h.Size.ToString ( ).PadLeft ( 4 , '0' )} | CID: {h.ClientID.ToString ( ).PadLeft ( 5 , '0' )}" , ConsoleColor.Green );
+		public static void Rcv ( Client c , SHeader h ) => Write ( $"RCV < P: 0x{h.PacketId.ToString ( "X" ).PadLeft ( 4 , '0' )} | S: {h.Size.ToString ( ).PadLeft ( 4 , '0' )} | CID: {h.ClientId.ToString ( ).PadLeft ( 5 , '0' )}" , ConsoleColor.Magenta );
+		public static void Snd ( Client c , SHeader h ) => Write ( $"SND > P: 0x{h.PacketId.ToString ( "X" ).PadLeft ( 4 , '0' )} | S: {h.Size.ToString ( ).PadLeft ( 4 , '0' )} | CID: {h.ClientId.ToString ( ).PadLeft ( 5 , '0' )}" , ConsoleColor.Green );
 	}
 }

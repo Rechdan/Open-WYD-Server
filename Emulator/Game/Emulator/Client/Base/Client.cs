@@ -114,7 +114,7 @@ namespace Emulator {
 
 				Log.Snd ( this , PConvert.ToStruct<SHeader> ( send ) );
 
-				PSecurity.Encrypt ( send );
+				PSecurity.Encrypt ( ref send );
 
 				this.Socket.BeginSend ( send , 0 , send.Length , SocketFlags.None , null , null );
 			}

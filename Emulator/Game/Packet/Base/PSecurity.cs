@@ -40,7 +40,7 @@ namespace Emulator {
 		};
 		#endregion
 
-		public static void Encrypt ( byte [ ] pBuffer ) {
+		public static void Encrypt ( ref byte [ ] pBuffer ) {
 			byte checksumEnc = 0;
 			byte checksumDec = 0;
 			byte keyResult = 0;
